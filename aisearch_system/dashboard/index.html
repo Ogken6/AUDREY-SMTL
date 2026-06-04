@@ -1,0 +1,816 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ORACLE Mission Control — CrispyGlaze</title>
+  <style>
+    :root {
+      --bg: #0d1117;
+      --card: #161b22;
+      --border: #30363d;
+      --text: #e6edf3;
+      --muted: #8b949e;
+      --green: #3fb950;
+      --yellow: #d29922;
+      --red: #f85149;
+      --blue: #58a6ff;
+      --purple: #bc8cff;
+      --simple: #ff7b72;
+      --easy: #79c0ff;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+      font-size: 14px;
+      line-height: 1.5;
+      min-height: 100vh;
+    }
+
+    /* ── Header ── */
+    header {
+      border-bottom: 1px solid var(--border);
+      padding: 16px 24px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .logo {
+      font-size: 18px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      color: var(--blue);
+    }
+
+    .brand-tag {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 3px 12px;
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    .run-mode {
+      margin-left: auto;
+      background: rgba(63, 185, 80, 0.1);
+      border: 1px solid var(--green);
+      color: var(--green);
+      border-radius: 4px;
+      padding: 3px 10px;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 1px;
+    }
+
+    /* ── Main Layout ── */
+    .layout {
+      display: grid;
+      grid-template-columns: 340px 1fr;
+      min-height: calc(100vh - 65px);
+    }
+
+    /* ── Sidebar ── */
+    .sidebar {
+      border-right: 1px solid var(--border);
+      padding: 20px;
+      overflow-y: auto;
+    }
+
+    .section-label {
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 1.5px;
+      color: var(--muted);
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+
+    /* Status badges */
+    .status-badges {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-bottom: 28px;
+    }
+
+    .status-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 13px;
+    }
+
+    .dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+    .dot.idle    { background: var(--muted); }
+    .dot.running { background: var(--yellow); animation: pulse 1.5s ease-in-out infinite; }
+    .dot.done    { background: var(--green); }
+    .dot.error   { background: var(--red); }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.4; }
+    }
+
+    .status-label { color: var(--muted); }
+    .status-val   { color: var(--text); margin-left: auto; font-weight: 500; }
+
+    /* Keyword section */
+    .keyword-block {
+      margin-bottom: 24px;
+    }
+
+    .keyword-title {
+      font-size: 13px;
+      font-weight: 600;
+      margin-bottom: 10px;
+    }
+    .keyword-title.simple { color: var(--simple); }
+    .keyword-title.easy   { color: var(--easy); }
+
+    .anchor-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-bottom: 6px;
+    }
+
+    .anchor-dot {
+      width: 28px;
+      height: 28px;
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 10px;
+      font-weight: 600;
+      cursor: pointer;
+      border: 1px solid transparent;
+      transition: transform 0.1s;
+    }
+    .anchor-dot:hover { transform: scale(1.15); }
+
+    .anchor-dot.simple { background: rgba(255,123,114,0.15); border-color: rgba(255,123,114,0.3); color: var(--simple); }
+    .anchor-dot.easy   { background: rgba(121,192,255,0.15); border-color: rgba(121,192,255,0.3); color: var(--easy); }
+
+    .anchor-dot.done    { background: rgba(63,185,80,0.2); border-color: var(--green); color: var(--green); }
+    .anchor-dot.running { background: rgba(210,153,34,0.2); border-color: var(--yellow); color: var(--yellow); }
+    .anchor-dot.error   { background: rgba(248,81,73,0.2); border-color: var(--red); color: var(--red); }
+
+    .anchor-dot .count { font-size: 9px; opacity: 0.7; }
+
+    /* ── Main Content ── */
+    .main {
+      padding: 24px;
+      overflow-y: auto;
+    }
+
+    .panel {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      margin-bottom: 20px;
+    }
+
+    .panel-header {
+      padding: 14px 18px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 600;
+      font-size: 13px;
+    }
+
+    .panel-body { padding: 18px; }
+
+    /* Pipeline progress */
+    .pipeline-steps {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+
+    .pipe-step {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 10px 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .pipe-step:last-child { border-bottom: none; }
+
+    .pipe-icon {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      flex-shrink: 0;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      color: var(--muted);
+    }
+    .pipe-icon.active { border-color: var(--yellow); color: var(--yellow); background: rgba(210,153,34,0.1); }
+    .pipe-icon.done   { border-color: var(--green); color: var(--green); background: rgba(63,185,80,0.1); }
+    .pipe-icon.error  { border-color: var(--red); color: var(--red); background: rgba(248,81,73,0.1); }
+
+    .pipe-label { font-weight: 500; font-size: 13px; }
+    .pipe-sub   { font-size: 11px; color: var(--muted); }
+    .pipe-time  { margin-left: auto; font-size: 11px; color: var(--muted); white-space: nowrap; }
+
+    /* Prompt detail */
+    #prompt-detail {
+      display: none;
+    }
+    #prompt-detail.visible { display: block; }
+
+    .prompt-text {
+      font-size: 15px;
+      line-height: 1.6;
+      margin-bottom: 16px;
+      padding: 12px 16px;
+      background: var(--bg);
+      border-radius: 6px;
+      border-left: 3px solid var(--blue);
+    }
+
+    .detail-meta {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-bottom: 16px;
+    }
+
+    .tag {
+      padding: 3px 10px;
+      border-radius: 12px;
+      font-size: 11px;
+      font-weight: 500;
+    }
+    .tag.intent   { background: rgba(188,140,255,0.15); color: var(--purple); border: 1px solid rgba(188,140,255,0.3); }
+    .tag.stage    { background: rgba(88,166,255,0.15); color: var(--blue); border: 1px solid rgba(88,166,255,0.3); }
+    .tag.anchor   { background: rgba(63,185,80,0.15); color: var(--green); border: 1px solid rgba(63,185,80,0.3); }
+    .tag.keyword  { background: rgba(210,153,34,0.15); color: var(--yellow); border: 1px solid rgba(210,153,34,0.3); }
+
+    .engine-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 10px;
+      margin-bottom: 16px;
+    }
+
+    .engine-card {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 12px;
+    }
+
+    .engine-name {
+      font-size: 12px;
+      font-weight: 600;
+      margin-bottom: 8px;
+      color: var(--muted);
+    }
+    .engine-name.chatgpt { color: #74aa9c; }
+    .engine-name.gemini  { color: #8bb9fe; }
+    .engine-name.claude  { color: #e39a47; }
+    .engine-name.google_aio { color: #4285f4; }
+    .engine-name.copilot { color: #0078d4; }
+
+    .engine-status {
+      font-size: 11px;
+      color: var(--muted);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .result-row {
+      display: flex;
+      justify-content: space-between;
+      font-size: 12px;
+      padding: 4px 0;
+      border-top: 1px solid var(--border);
+    }
+    .result-row .label { color: var(--muted); }
+    .result-row .val   { font-weight: 500; }
+
+    /* Empty state */
+    .empty-state {
+      text-align: center;
+      padding: 48px 24px;
+      color: var(--muted);
+    }
+    .empty-icon { font-size: 36px; margin-bottom: 12px; }
+    .empty-state h3 { font-size: 15px; color: var(--text); margin-bottom: 6px; }
+
+    /* Refresh */
+    .refresh-bar {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 18px;
+      border-top: 1px solid var(--border);
+      font-size: 11px;
+      color: var(--muted);
+    }
+    .refresh-bar button {
+      background: var(--card);
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: 4px 12px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 11px;
+    }
+    .refresh-bar button:hover { border-color: var(--blue); }
+
+    /* Progress bar */
+    .progress-bar {
+      height: 4px;
+      background: var(--border);
+      border-radius: 2px;
+      overflow: hidden;
+      margin-top: 8px;
+    }
+    .progress-fill {
+      height: 100%;
+      background: var(--green);
+      border-radius: 2px;
+      transition: width 0.5s ease;
+    }
+
+    /* Engine legend */
+    .legend {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+      font-size: 11px;
+      color: var(--muted);
+      margin-top: 8px;
+    }
+    .legend-item { display: flex; align-items: center; gap: 5px; }
+    .legend-dot { width: 8px; height: 8px; border-radius: 50%; }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="logo">ORACLE</div>
+  <div class="brand-tag">CrispyGlaze</div>
+  <div class="brand-tag" id="keyword-display">simple comfort food recipes · easy comfort food recipes</div>
+  <div class="run-mode">BASELINE BUILD</div>
+</header>
+
+<div class="layout">
+
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <div class="section-label">Pipeline Status</div>
+    <div class="status-badges">
+      <div class="status-row">
+        <div class="dot idle" id="dot-pipeline"></div>
+        <span class="status-label">Pipeline</span>
+        <span class="status-val" id="val-pipeline">IDLE</span>
+      </div>
+      <div class="status-row">
+        <div class="dot done"></div>
+        <span class="status-label">Anchors loaded</span>
+        <span class="status-val" id="val-anchors">30</span>
+      </div>
+      <div class="status-row">
+        <div class="dot idle" id="dot-queries"></div>
+        <span class="status-label">Queries fired</span>
+        <span class="status-val" id="val-queries">0 / 150</span>
+      </div>
+      <div class="status-row">
+        <div class="dot idle" id="dot-responses"></div>
+        <span class="status-label">Responses captured</span>
+        <span class="status-val" id="val-responses">0</span>
+      </div>
+      <div class="status-row">
+        <div class="dot idle" id="dot-sieve"></div>
+        <span class="status-label">SIEVE</span>
+        <span class="status-val" id="val-sieve">WAITING</span>
+      </div>
+      <div class="status-row">
+        <div class="dot idle" id="dot-cartographer"></div>
+        <span class="status-label">CARTOGRAPHER</span>
+        <span class="status-val" id="val-cartographer">WAITING</span>
+      </div>
+      <div class="status-row">
+        <div class="dot idle" id="dot-rival"></div>
+        <span class="status-label">RIVAL</span>
+        <span class="status-val" id="val-rival">WAITING</span>
+      </div>
+      <div class="status-row">
+        <div class="dot idle" id="dot-oraclex"></div>
+        <span class="status-label">ORACLE-X</span>
+        <span class="status-val" id="val-oraclex">WAITING</span>
+      </div>
+    </div>
+
+    <div class="section-label">"Simple" Anchors — S01–S15</div>
+    <div class="anchor-grid" id="simple-grid"></div>
+
+    <div class="section-label" style="margin-top:20px">"Easy" Anchors — E01–E15</div>
+    <div class="anchor-grid" id="easy-grid"></div>
+
+    <div class="legend">
+      <div class="legend-item"><div class="legend-dot" style="background:var(--muted)"></div> Pending</div>
+      <div class="legend-item"><div class="legend-dot" style="background:var(--yellow)"></div> Running</div>
+      <div class="legend-item"><div class="legend-dot" style="background:var(--green)"></div> Done</div>
+      <div class="legend-item"><div class="legend-dot" style="background:var(--red)"></div> Error</div>
+    </div>
+  </aside>
+
+  <!-- Main -->
+  <main class="main">
+
+    <!-- Pipeline Steps -->
+    <div class="panel">
+      <div class="panel-header">
+        <span>🗺</span> Pipeline Run Order
+      </div>
+      <div class="panel-body">
+        <div class="pipeline-steps" id="pipeline-steps">
+          <div class="pipe-step" id="step-magnus">
+            <div class="pipe-icon" id="icon-magnus">1</div>
+            <div>
+              <div class="pipe-label">MAGNUS</div>
+              <div class="pipe-sub">Validate config · check SENTINEL · confirm prompt library</div>
+            </div>
+            <div class="pipe-time" id="time-magnus">—</div>
+          </div>
+          <div class="pipe-step" id="step-scout">
+            <div class="pipe-icon" id="icon-scout">2</div>
+            <div>
+              <div class="pipe-label">SCOUT</div>
+              <div class="pipe-sub">Confirm keyword sets · refresh if >7 days old</div>
+            </div>
+            <div class="pipe-time" id="time-scout">—</div>
+          </div>
+          <div class="pipe-step" id="step-falcon">
+            <div class="pipe-icon" id="icon-falcon">3</div>
+            <div>
+              <div class="pipe-label">FALCON</div>
+              <div class="pipe-sub">Fire 30 anchors + full library across 5 engines</div>
+            </div>
+            <div class="pipe-time" id="time-falcon">—</div>
+          </div>
+          <div class="pipe-step" id="step-sieve">
+            <div class="pipe-icon" id="icon-sieve">4</div>
+            <div>
+              <div class="pipe-label">SIEVE</div>
+              <div class="pipe-sub">Extract entities · positions · URLs · sentiment</div>
+            </div>
+            <div class="pipe-time" id="time-sieve">—</div>
+          </div>
+          <div class="pipe-step" id="step-cartographer">
+            <div class="pipe-icon" id="icon-cartographer">5</div>
+            <div>
+              <div class="pipe-label">CARTOGRAPHER</div>
+              <div class="pipe-sub">Fetch URLs · classify sources · update citation graph</div>
+            </div>
+            <div class="pipe-time" id="time-cartographer">—</div>
+          </div>
+          <div class="pipe-step" id="step-rival">
+            <div class="pipe-icon" id="icon-rival">6</div>
+            <div>
+              <div class="pipe-label">RIVAL</div>
+              <div class="pipe-sub">Compute SoV · generate gap map · detect displacement</div>
+            </div>
+            <div class="pipe-time" id="time-rival">—</div>
+          </div>
+          <div class="pipe-step" id="step-oraclex">
+            <div class="pipe-icon" id="icon-oraclex">7</div>
+            <div>
+              <div class="pipe-label">ORACLE-X</div>
+              <div class="pipe-sub">Generate prioritised recommendations (active Day 8+)</div>
+            </div>
+            <div class="pipe-time" id="time-oraclex">—</div>
+          </div>
+        </div>
+      </div>
+      <div class="refresh-bar">
+        <span id="last-refresh">Last updated: never</span>
+        <button onclick="refresh()">Refresh</button>
+        <span style="margin-left:auto">Est. total: 2.5–4 hours</span>
+      </div>
+    </div>
+
+    <!-- Prompt Detail -->
+    <div class="panel" id="prompt-detail">
+      <div class="panel-header">
+        <span>🔍</span>
+        <span id="detail-id">—</span>
+        <span id="detail-keyword" style="font-weight:400;font-size:11px;color:var(--muted);margin-left:4px"></span>
+      </div>
+      <div class="panel-body">
+        <div class="prompt-text" id="detail-text"></div>
+        <div class="detail-meta" id="detail-meta"></div>
+        <div class="engine-grid" id="detail-engines"></div>
+        <div style="font-size:11px;color:var(--muted);margin-top:8px">
+          Click any anchor dot on the left to see engine-by-engine status.
+        </div>
+      </div>
+    </div>
+
+    <!-- Empty state -->
+    <div class="panel" id="empty-detail">
+      <div class="panel-body">
+        <div class="empty-state">
+          <div class="empty-icon">🎯</div>
+          <h3>Click an anchor dot to explore it</h3>
+          <p>See engine-by-engine results for each of the 30 anchor prompts once the pipeline runs.</p>
+        </div>
+      </div>
+    </div>
+
+  </main>
+</div>
+
+<script>
+const ENGINES = ['chatgpt', 'gemini', 'claude', 'google_aio', 'copilot'];
+const ENGINE_LABELS = {
+  chatgpt: 'ChatGPT',
+  gemini: 'Gemini',
+  claude: 'Claude',
+  google_aio: 'Google AIO',
+  copilot: 'Copilot'
+};
+const ENGINE_COLORS = {
+  chatgpt: '#74aa9c',
+  gemini: '#8bb9fe',
+  claude: '#e39a47',
+  google_aio: '#4285f4',
+  copilot: '#0078d4'
+};
+
+let prompts = [];
+let pipelineState = {};
+let responses = {};
+
+function setDot(el, status) {
+  el.className = 'dot ' + status;
+}
+
+// ── Load data ──────────────────────────────────────────────
+async function refresh() {
+  await Promise.all([
+    loadPromptLibrary(),
+    loadPipelineState(),
+    loadResponses()
+  ]);
+  render();
+  document.getElementById('last-refresh').textContent =
+    'Last updated: ' + new Date().toLocaleTimeString();
+}
+
+async function loadPromptLibrary() {
+  try {
+    const r = await fetch('memory/prompt_library.json');
+    if (r.ok) {
+      prompts = (await r.json()).prompts || [];
+    }
+  } catch(e) { prompts = []; }
+}
+
+async function loadPipelineState() {
+  try {
+    const r = await fetch('memory/pipeline_state.json');
+    if (r.ok) {
+      pipelineState = await r.json();
+    } else {
+      pipelineState = {};
+    }
+  } catch(e) { pipelineState = {}; }
+}
+
+async function loadResponses() {
+  responses = {};
+  try {
+    const r = await fetch('memory/response_log.jsonl');
+    if (r.ok) {
+      const text = await r.text();
+      text.trim().split('\n').forEach(line => {
+        try {
+          const resp = JSON.parse(line);
+          const key = resp.prompt_id + '::' + resp.engine;
+          responses[key] = resp;
+        } catch(e) {}
+      });
+    }
+  } catch(e) {}
+}
+
+// ── Render ─────────────────────────────────────────────────
+function render() {
+  renderAnchors();
+  renderPipeline();
+  renderOverallStatus();
+}
+
+function renderOverallStatus() {
+  const totalEngines = prompts.length * ENGINES.length;
+  const doneCount = Object.keys(responses).length;
+  document.getElementById('val-queries').textContent =
+    doneCount + ' / ' + totalEngines;
+  document.getElementById('val-responses').textContent = doneCount;
+
+  const dotQ = document.getElementById('dot-queries');
+  const dotR = document.getElementById('dot-responses');
+  setDot(dotQ, doneCount >= totalEngines ? 'done' : doneCount > 0 ? 'running' : 'idle');
+  setDot(dotR, doneCount >= totalEngines ? 'done' : doneCount > 0 ? 'running' : 'idle');
+}
+
+function renderAnchors() {
+  const simpleGrid = document.getElementById('simple-grid');
+  const easyGrid = document.getElementById('easy-grid');
+  simpleGrid.innerHTML = '';
+  easyGrid.innerHTML = '';
+
+  prompts.forEach(p => {
+    const id = p.id; // e.g. S01
+    const isSimple = id.startsWith('S');
+    const isDone = ENGINES.every(e => responses[id + '::' + e]);
+    const isRunning = !isDone && ENGINES.some(e => responses[id + '::' + e]);
+    const hasError = false;
+
+    let cls = isSimple ? 'simple' : 'easy';
+    if (isDone) cls += ' done';
+    else if (isRunning) cls += ' running';
+
+    const el = document.createElement('div');
+    el.className = 'anchor-dot ' + cls;
+    el.title = p.text.substring(0, 60) + '...';
+    el.innerHTML = id;
+    el.onclick = () => showPromptDetail(p);
+
+    if (isSimple) simpleGrid.appendChild(el);
+    else easyGrid.appendChild(el);
+  });
+
+  // Count summaries
+  const simpleDone = prompts.filter(p => p.id.startsWith('S') && ENGINES.every(e => responses[p.id + '::' + e])).length;
+  const easyDone = prompts.filter(p => p.id.startsWith('E') && ENGINES.every(e => responses[p.id + '::' + e])).length;
+  document.querySelector('#simple-grid').closest('.section-label').nextElementSibling
+    ? null : null; // just for reference
+}
+
+function renderPipeline() {
+  const state = pipelineState.state || 'idle';
+  const stepOrder = ['magnus', 'scout', 'falcon', 'sieve', 'cartographer', 'rival', 'oraclex'];
+  const stepStates = pipelineState.stages || {};
+
+  // Overall pipeline status
+  const dotP = document.getElementById('dot-pipeline');
+  const valP = document.getElementById('val-pipeline');
+  if (state === 'running') {
+    setDot(dotP, 'running');
+    valP.textContent = 'RUNNING';
+  } else if (state === 'complete') {
+    setDot(dotP, 'done');
+    valP.textContent = 'COMPLETE';
+  } else if (state === 'failed') {
+    setDot(dotP, 'error');
+    valP.textContent = 'FAILED';
+  } else {
+    setDot(dotP, 'idle');
+    valP.textContent = 'IDLE';
+  }
+
+  stepOrder.forEach((agent, i) => {
+    const s = stepStates[agent] || 'pending';
+    const icon = document.getElementById('icon-' + agent);
+    const time = document.getElementById('time-' + agent);
+    icon.className = 'pipe-icon';
+    if (s === 'running') icon.classList.add('active');
+    else if (s === 'done') icon.classList.add('done');
+    else if (s === 'error') icon.classList.add('error');
+    icon.textContent = i + 1;
+    if (stepStates[agent + '_time']) {
+      time.textContent = stepStates[agent + '_time'];
+    }
+  });
+
+  // Individual stage statuses in sidebar
+  const agents = ['sieve', 'cartographer', 'rival', 'oraclex'];
+  const labels = {
+    sieve: 'val-sieve',
+    cartographer: 'val-cartographer',
+    rival: 'val-rival',
+    oraclex: 'val-oraclex'
+  };
+  agents.forEach(a => {
+    const s = stepStates[a] || 'waiting';
+    const dotEl = document.getElementById('dot-' + a);
+    const valEl = document.getElementById(labels[a]);
+    if (s === 'done') {
+      setDot(dotEl, 'done');
+      valEl.textContent = 'DONE';
+    } else if (s === 'running') {
+      setDot(dotEl, 'running');
+      valEl.textContent = 'RUNNING';
+    } else if (s === 'error') {
+      setDot(dotEl, 'error');
+      valEl.textContent = 'ERROR';
+    } else {
+      valEl.textContent = 'WAITING';
+    }
+  });
+}
+
+function showPromptDetail(prompt) {
+  document.getElementById('empty-detail').style.display = 'none';
+  document.getElementById('prompt-detail').classList.add('visible');
+
+  document.getElementById('detail-id').textContent = prompt.id;
+  document.getElementById('detail-keyword').textContent = '(' + prompt.keyword + ')';
+  document.getElementById('detail-text').textContent = prompt.text;
+
+  const meta = document.getElementById('detail-meta');
+  meta.innerHTML = '';
+  [
+    ['intent', prompt.intent],
+    ['stage', prompt.funnel_stage],
+    ['anchor', prompt.anchor ? 'YES' : 'no'],
+    ['keyword', prompt.keyword]
+  ].forEach(([label, val]) => {
+    const t = document.createElement('div');
+    t.className = 'tag ' + label;
+    t.textContent = val;
+    meta.appendChild(t);
+  });
+
+  const grid = document.getElementById('detail-engines');
+  grid.innerHTML = '';
+  ENGINES.forEach(eng => {
+    const resp = responses[prompt.id + '::' + eng];
+    const card = document.createElement('div');
+    card.className = 'engine-card';
+
+    const nameEl = document.createElement('div');
+    nameEl.className = 'engine-name ' + eng;
+    nameEl.textContent = ENGINE_LABELS[eng];
+    card.appendChild(nameEl);
+
+    if (resp) {
+      const brandPresent = resp.brand_present;
+      const status = document.createElement('div');
+      status.className = 'engine-status';
+      status.innerHTML = brandPresent
+        ? '✅ <span style="color:var(--green)">Brand present</span>'
+        : '❌ <span style="color:var(--red)">Brand absent</span>';
+      card.appendChild(status);
+
+      if (resp.brand_position_rank) {
+        const pos = document.createElement('div');
+        pos.className = 'result-row';
+        pos.innerHTML = '<span class="label">Position</span><span class="val">#' + resp.brand_position_rank + '</span>';
+        card.appendChild(pos);
+      }
+      if (resp.cited_urls && resp.cited_urls.length > 0) {
+        const urls = document.createElement('div');
+        urls.className = 'result-row';
+        urls.innerHTML = '<span class="label">URLs cited</span><span class="val">' + resp.cited_urls.length + '</span>';
+        card.appendChild(urls);
+      }
+      if (resp.status && resp.status !== 'success') {
+        const err = document.createElement('div');
+        err.className = 'result-row';
+        err.innerHTML = '<span class="label">Status</span><span class="val" style="color:var(--red)">' + resp.status + '</span>';
+        card.appendChild(err);
+      }
+    } else {
+      const pending = document.createElement('div');
+      pending.className = 'engine-status';
+      pending.textContent = '◯ Pending';
+      card.appendChild(pending);
+    }
+
+    grid.appendChild(card);
+  });
+}
+
+// Auto-refresh every 30 seconds
+refresh();
+setInterval(refresh, 30000);
+</script>
+</body>
+</html>
