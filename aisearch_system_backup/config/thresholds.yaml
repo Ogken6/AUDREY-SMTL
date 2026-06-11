@@ -1,0 +1,49 @@
+# ============================================================
+# config/thresholds.yaml — Alert and Quality Thresholds
+# ============================================================
+
+quality:
+
+  # FALCON
+  falcon_min_completion_rate: 0.80      # Minimum % of prompts with responses
+  falcon_max_personalisation_rate: 0.02  # Maximum % of personalised responses allowed
+
+  # SIEVE
+  sieve_min_extraction_confidence: 0.65  # Below this = flag for review
+  sieve_avg_confidence_threshold: 0.75   # Pipeline gate — below this = degraded run flag
+
+  # CARTOGRAPHER
+  cartographer_min_url_coverage: 0.60  # Minimum % of cited URLs successfully fetched
+
+  # RIVAL
+  rival_displacement_alert_threshold: 3  # Number of displacement events triggering immediate alert
+
+drift:
+  anchor_prompt_drift_threshold: 0.15   # 15 percentage point change = drift event
+  high_severity_drift_threshold: 0.25   # 25 percentage point change = high severity
+  lookback_days: 7
+
+storage:
+  disk_warning_pct: 70
+  disk_error_pct: 85
+  disk_critical_pct: 95
+  response_log_max_size_gb: 50
+  backup_max_age_hours: 25
+
+agent_liveness:
+  magnus_silence_hours: 26
+  scout_silence_days: 8
+  falcon_silence_hours: 26
+  sieve_silence_hours: 28
+  cartographer_silence_hours: 8
+  rival_silence_hours: 26
+  oracle_x_silence_days: 8
+
+proxy:
+  min_available_per_region: 30
+  critical_available_per_region: 10
+
+competitive:
+  sov_decline_alert_threshold: 0.05    # 5 point SoV decline = WARNING
+  sov_decline_critical_threshold: 0.10  # 10 point SoV decline = ERROR
+  gap_high_severity_weekly_alert: 5    # Alert if > 5 new high-severity gaps in a week

@@ -1,0 +1,15 @@
+{
+  "run_id": null,
+  "started_at": null,
+  "brand": null,
+  "stages": {
+    "scout":  { "status": "idle" },
+    "falcon": { "status": "idle" },
+    "sieve":  { "status": "idle" },
+    "cartographer": { "status": "idle" },
+    "rival": { "status": "idle" },
+    "oracle_x": { "status": "idle" }
+  },
+  "errors": [],
+  "data_quality_flags": []
+}

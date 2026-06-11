@@ -1,0 +1,52 @@
+# ============================================================
+# config/system.yaml — Master System Configuration
+# ============================================================
+
+system:
+  name: "ORACLE"
+  version: "1.0.0"
+  environment: "production"  # production | staging | development
+  timezone: "UTC"
+  log_level: "INFO"  # DEBUG | INFO | WARNING | ERROR | CRITICAL
+  log_dir: "logs/"
+  data_dir: "memory/"
+  snapshot_dir: "memory/snapshots/"
+
+database:
+  host: "${DB_HOST}"
+  port: 5432
+  name: "oracle_db"
+  user: "${DB_USER}"
+  password: "${DB_PASSWORD}"
+  pool_size: 10
+  max_overflow: 20
+  connection_timeout_seconds: 10
+
+redis:
+  url: "${REDIS_URL}"
+  job_queue: "oracle:jobs"
+  cache_ttl_seconds: 172800  # 48 hours
+
+storage:
+  response_log: "memory/response_log.jsonl"
+  prompt_library: "memory/prompt_library.json"
+  citation_graph: "memory/citation_graph.json"
+  entity_registry: "memory/entity_registry.json"
+  pipeline_state: "memory/pipeline_state.json"
+  max_response_log_size_gb: 50
+  archive_after_days: 90
+
+pipeline:
+  schedule_cron: "0 2 * * *"           # Daily at 02:00 UTC
+  citation_update_cron: "0 */6 * * *"  # Every 6 hours
+  sentinel_cron: "*/15 * * * *"        # Every 15 minutes
+  scout_refresh_cron: "0 1 * * 1"      # Mondays at 01:00 UTC
+  oracle_x_cron: "0 8 * * 1"           # Mondays at 08:00 UTC
+
+llm:
+  extraction_model: "claude-sonnet-4-20250514"
+  extraction_max_tokens: 1000
+  extraction_temperature: 0.1
+  recommendation_model: "claude-sonnet-4-20250514"
+  recommendation_max_tokens: 2000
+  recommendation_temperature: 0.3

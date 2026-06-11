@@ -1,0 +1,101 @@
+# ============================================================
+# config/engines.yaml — AI Engine Configuration
+# ============================================================
+
+engines:
+
+  chatgpt:
+    enabled: true
+    display_name: "ChatGPT (GPT-4o)"
+    access_method: "api"
+    provider: "openai"
+    model: "gpt-4o"
+    api_key_env: "OPENAI_API_KEY"
+    base_url: "https://api.openai.com/v1"
+    temperature: 0.3
+    max_tokens: 1500
+    timeout_seconds: 30
+    rate_limit_rpm: 60
+    rate_limit_tpm: 90000
+    retry_on_codes: [429, 500, 502, 503]
+    weight: 1.0  # Relative importance for SoV calculations
+
+  perplexity:
+    enabled: true
+    display_name: "Perplexity (Sonar)"
+    access_method: "api"
+    provider: "perplexity"
+    model: "llama-3.1-sonar-large-128k-online"
+    api_key_env: "PERPLEXITY_API_KEY"
+    base_url: "https://api.perplexity.ai"
+    temperature: 0.3
+    max_tokens: 1500
+    timeout_seconds: 30
+    rate_limit_rpm: 50
+    citations_field: "citations"
+    weight: 0.9
+
+  gemini:
+    enabled: true
+    display_name: "Gemini"
+    access_method: "api"
+    provider: "google"
+    model: "gemini-2.0-flash-exp"
+    api_key_env: "GOOGLE_AI_API_KEY"
+    base_url: "https://generativelanguage.googleapis.com"
+    temperature: 0.3
+    max_tokens: 1500
+    timeout_seconds: 30
+    rate_limit_rpm: 60
+    weight: 0.85
+
+  claude:
+    enabled: true
+    display_name: "Claude (Sonnet)"
+    access_method: "api"
+    provider: "anthropic"
+    model: "claude-sonnet-4-20250514"
+    api_key_env: "ANTHROPIC_API_KEY"
+    base_url: "https://api.anthropic.com"
+    temperature: 0.3
+    max_tokens: 1500
+    timeout_seconds: 30
+    rate_limit_rpm: 50
+    weight: 0.85
+
+  google_aio:
+    enabled: true
+    display_name: "Google AI Overviews"
+    access_method: "browser"
+    url_template: "https://www.google.com/search?q={prompt}"
+    wait_selector: ".IVvmHb"
+    timeout_ms: 15000
+    screenshot_on_failure: true
+    proxy_required: true
+    proxy_session_type: "rotating"
+    rate_limit_queries_per_minute: 10
+    weight: 1.0  # Highest weight — largest query volume
+
+  google_aim:
+    enabled: false  # Enable when selector confirmed
+    display_name: "Google AI Mode"
+    access_method: "browser"
+    url_template: "https://www.google.com/search?q={prompt}&udm=50"
+    wait_selector: ".SGE-response"
+    timeout_ms: 20000
+    proxy_required: true
+    weight: 0.80
+
+  copilot:
+    enabled: true
+    display_name: "Microsoft Copilot"
+    access_method: "browser"
+    url_template: "https://copilot.microsoft.com/"
+    input_selector: "#userInput"
+    response_selector: ".cib-chat-main"
+    timeout_ms: 20000
+    screenshot_on_failure: true
+    proxy_required: true
+    proxy_session_type: "sticky"
+    conversation_style: "balanced"
+    weight: 0.75

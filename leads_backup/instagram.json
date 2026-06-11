@@ -1,0 +1,61 @@
+{
+  "platform": "instagram",
+  "source": "Tom (Prospector)",
+  "date": "2026-03-11",
+  "leads": [
+    {
+      "id": "ig-001",
+      "handle": "@thedopamineclub_",
+      "niche": "Books",
+      "followers": "1.7M",
+      "signal": "Massive order volume, packing content",
+      "status": "pending",
+      "notes": ""
+    },
+    {
+      "id": "ig-002",
+      "handle": "@smoomskin",
+      "niche": "Skincare",
+      "followers": "764K",
+      "signal": "Restock/scaling",
+      "status": "pending",
+      "notes": ""
+    },
+    {
+      "id": "ig-003",
+      "handle": "@mollsco.uk",
+      "niche": "Jewelry",
+      "followers": "437K",
+      "signal": "700 orders/month goal",
+      "status": "pending",
+      "notes": ""
+    },
+    {
+      "id": "ig-004",
+      "handle": "@kamistudiosuk",
+      "niche": "Crafts",
+      "followers": "559K",
+      "signal": "Custom polymer clay",
+      "status": "pending",
+      "notes": ""
+    },
+    {
+      "id": "ig-005",
+      "handle": "@calmoverchaos.ltd",
+      "niche": "Stationery",
+      "followers": "11K",
+      "signal": "Inventory management",
+      "status": "pending",
+      "notes": ""
+    },
+    {
+      "id": "ig-006",
+      "handle": "@helenlikesplants",
+      "niche": "Plants",
+      "followers": "283K",
+      "signal": "Sustainable/small biz",
+      "status": "pending",
+      "notes": ""
+    }
+  ]
+}

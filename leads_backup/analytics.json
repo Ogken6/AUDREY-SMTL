@@ -1,0 +1,15 @@
+{
+  "lastUpdated": "2026-03-12T10:55:00Z",
+  "analyst": "Michelle",
+  "metrics": {
+    "totalLeads": 27,
+    "hotLeads": 2,
+    "warmLeads": 9,
+    "coldLeads": 1,
+    "pendingLeads": 5,
+    "messagesSent": 7,
+    "repliesReceived": 0,
+    "bookedCalls": 0,
+    "conversionRate": 0
+  }
+}

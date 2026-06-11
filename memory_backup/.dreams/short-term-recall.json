@@ -1,0 +1,490 @@
+{
+  "version": 1,
+  "updatedAt": "2026-05-03T11:37:17.348Z",
+  "entries": {
+    "memory:memory/2026-03-22.md:73:110": {
+      "key": "memory:memory/2026-03-22.md:73:110",
+      "path": "memory/2026-03-22.md",
+      "startLine": 73,
+      "endLine": 110,
+      "source": "memory",
+      "snippet": "- Campaign overview - Target markets (UK & Ireland) - Three ICPs (Facebook Fiona, Instagram Isabelle, TikTok Tara) - 9 agent roles and responsibilities - Platform timing windows (CRITICAL/HOT/WARM/EXPIRED) - 5 pipeline stages - 4 messaging angles (A/B/C/D) - Samira's morning briefing structure - Google Sheet tab access - EngageBay CRM pipeline - 7 analysis dimensions - Key rules and disqualification checklist --- ## Prospecting Run Attempted Tom was spawned to run a prospecting session with new criteria. Found 1 qualified lead: - **@ecandles.uk** (Instagram) - UK-based candle seller with \"DM to order\" signals, no website, recent Easter product activity Challenges encountered: - TikTok pag",
+      "recallCount": 4,
+      "dailyCount": 0,
+      "groundedCount": 0,
+      "totalScore": 4,
+      "maxScore": 1,
+      "firstRecalledAt": "2026-04-25T13:45:45.441Z",
+      "lastRecalledAt": "2026-05-03T11:24:27.985Z",
+      "queryHashes": [
+        "68e556f487e2",
+        "1e69a1e8aacc",
+        "ffb7ea55ec62",
+        "4290d3747217"
+      ],
+      "recallDays": [
+        "2026-04-25",
+        "2026-05-03"
+      ],
+      "conceptTags": [
+        "critical/hot/warm/expired",
+        "a/b/c/d",
+        "ecandles.uk",
+        "uk-based",
+        "campaign",
+        "overview",
+        "target",
+        "markets"
+      ]
+    },
+    "memory:memory/2026-03-22.md:52:81": {
+      "key": "memory:memory/2026-03-22.md:52:81",
+      "path": "memory/2026-03-22.md",
+      "startLine": 52,
+      "endLine": 81,
+      "source": "memory",
+      "snippet": "Ken provided the official tab access mapping document. Added to all agent SKILL files: | Agent | Tab Access | |-------|------------| | Audrey | Agent Cue, Leads Master, Message Log, Conversation Notes, Campaign Metrics (READ) | | Tom | Leads Master, Prospect Discovery Map (WRITE), Agent Cue, Settings (READ) | | Elsie | Leads Master (EDIT), Prospect Discovery Map, Agent Cue, Settings (READ) | | Jill | Leads Master (EDIT), Prospect Discovery Map, DM Intelligence Library, Agent Cue, Settings (READ) | | Sandra | Message Log (WRITE), DM Intelligence Library (EDIT), Leads Master, Agent Cue (READ) | | Kendy | Follow-Up Log, Conversation Notes (WRITE), Leads Master (EDIT), Message Log, DM Intellige",
+      "recallCount": 4,
+      "dailyCount": 0,
+      "groundedCount": 0,
+      "totalScore": 3.631887714561988,
+      "maxScore": 1,
+      "firstRecalledAt": "2026-04-25T13:45:45.441Z",
+      "lastRecalledAt": "2026-05-03T11:24:18.697Z",
+      "queryHashes": [
+        "68e556f487e2",
+        "ffb7ea55ec62",
+        "f7c8599c4716",
+        "5d803de53dc3"
+      ],
+      "recallDays": [
+        "2026-04-25",
+        "2026-04-28",
+        "2026-05-03"
+      ],
+      "conceptTags": [
+        "follow-up",
+        "ken",
+        "provided",
+        "the",
+        "official",
+        "tab",
+        "access",
+        "mapping"
+      ]
+    },
+    "memory:memory/2026-03-30.md:1:55": {
+      "key": "memory:memory/2026-03-30.md:1:55",
+      "path": "memory/2026-03-30.md",
+      "startLine": 1,
+      "endLine": 55,
+      "source": "memory",
+      "snippet": "# Dustid Weekly Workflow Summary ## Monday, March 30, 2026 — 6:00 AM UTC --- ### PIPELINE STATUS | Stage | Agent | Status | Count | |-------|-------|--------|-------| | 1 | Tom (Prospecting) | ✅ COMPLETE | 92 leads | | 2 | Elsie (Scoring) | ✅ COMPLETE | All scored | | 3 | Jill (Qualification) | 🔄 IN PROGRESS | 8 PRIORITY, 20 HOT | | 4 | Sandra (Outreach) | ⏳ PENDING | 28 ready | | 5 | Kendy (Follow-up) | ⏳ PENDING | — | --- ### LEAD BREAKDOWN **By Tier:** - PRIORITY: 8 (needs immediate attention) - HOT: 20 (ready for outreach) - WARM: 33 - COLD: 12 **By Platform:** - TikTok: 59 - Instagram: 29 - Facebook: 0 --- ### PRIORITY LEADS (Qualification In Progress) | Lead ID | Platform |",
+      "recallCount": 2,
+      "dailyCount": 0,
+      "groundedCount": 0,
+      "totalScore": 2,
+      "maxScore": 1,
+      "firstRecalledAt": "2026-04-25T14:12:28.611Z",
+      "lastRecalledAt": "2026-05-03T11:37:17.348Z",
+      "queryHashes": [
+        "27712183ae11",
+        "867e86ca4d0f"
+      ],
+      "recallDays": [
+        "2026-04-25",
+        "2026-05-03"
+      ],
+      "conceptTags": [
+        "follow-up",
+        "dustid",
+        "weekly",
+        "workflow",
+        "summary",
+        "monday",
+        "march",
+        "utc"
+      ]
+    },
+    "memory:memory/2026-03-12.md:1:45": {
+      "key": "memory:memory/2026-03-12.md:1:45",
+      "path": "memory/2026-03-12.md",
+      "startLine": 1,
+      "endLine": 45,
+      "source": "memory",
+      "snippet": "# 2026-03-12 - SMTL Session ## Attendees - Ken - Audrey (SMTL) ## Recap from Yesterday (March 11) 1. **Outreach Messages** - Polished 7 messages for Irish prospects into human tone (no emojis, no dashes) 2. **Niche Expansion** - Added 8 new niches: Pet Products, Jewelry, Home Decor, Print-on-Demand, Baby & Kids, Vintage/Retro, Garden/Plants, Stationery ## Today's Discussion - Ken asked for recap — provided summary above - Ken mentioned: Sandra email copy guidelines changed & Instagram account attempt for sandra_lewis_jones - **⚠️ MISSING FROM MEMORY** - No record found of these changes. Need to capture details. ## Action Items - [ ] Ask Ken for details on Sandra email guidelines changes",
+      "recallCount": 4,
+      "dailyCount": 0,
+      "groundedCount": 0,
+      "totalScore": 4,
+      "maxScore": 1,
+      "firstRecalledAt": "2026-04-25T14:12:28.611Z",
+      "lastRecalledAt": "2026-05-03T11:25:19.192Z",
+      "queryHashes": [
+        "27712183ae11",
+        "5d803de53dc3",
+        "4290d3747217",
+        "47f0df40e48b"
+      ],
+      "recallDays": [
+        "2026-04-25",
+        "2026-05-03"
+      ],
+      "conceptTags": [
+        "print-on-demand",
+        "vintage/retro",
+        "garden/plants",
+        "sandra-lewis-jones",
+        "smtl",
+        "attendees",
+        "ken",
+        "audrey"
+      ]
+    },
+    "memory:memory/2026-03-22.md:1:40": {
+      "key": "memory:memory/2026-03-22.md:1:40",
+      "path": "memory/2026-03-22.md",
+      "startLine": 1,
+      "endLine": 40,
+      "source": "memory",
+      "snippet": "# March 22, 2026 — Session Notes ## Summary Updated all Dustid campaign SOUL and SKILL files with new combined documents from Ken. Aligned all pipeline agents with new prospecting criteria and Google Sheet access mapping. --- ## What We Did Today ### 1. Prospecting Criteria Updates (Earlier Session) Tom's prospecting criteria were updated to focus on: - **Trending products (last 10 days)** — with engagement spike detection (comments/likes/follows) - **No website/store** — stricter exclusion of established businesses - **Point of Need / DM-overwhelmed** — prioritising sellers struggling with order management - **UK and Ireland** — location expanded from UK-only - **100-150 leads per sessi",
+      "recallCount": 4,
+      "dailyCount": 0,
+      "groundedCount": 0,
+      "totalScore": 4,
+      "maxScore": 1,
+      "firstRecalledAt": "2026-04-25T14:12:28.611Z",
+      "lastRecalledAt": "2026-05-03T11:25:19.192Z",
+      "queryHashes": [
+        "27712183ae11",
+        "9f0ca2289038",
+        "4290d3747217",
+        "47f0df40e48b"
+      ],
+      "recallDays": [
+        "2026-04-25",
+        "2026-05-03"
+      ],
+      "conceptTags": [
+        "comments/likes/follows",
+        "website/store",
+        "dm-overwhelmed",
+        "uk-only",
+        "100-150",
+        "march",
+        "summary",
+        "updated"
+      ]
+    },
+    "memory:memory/2026-03-22.md:31:58": {
+      "key": "memory:memory/2026-03-22.md:31:58",
+      "path": "memory/2026-03-22.md",
+      "startLine": 31,
+      "endLine": 58,
+      "source": "memory",
+      "snippet": "- `elsie/` - Elsie (Lead Scorer) - `jill/` - Jill (SDR Qualifier) - `sandra/` - Sandra (Copywriter) - `kendy/` - Kendy (Follow-Up Manager) - `michelle/` - Michelle (Sales Analyst) - `samira/` - Samira (Virtual Assistant) - `tyler/` - Tyler (CRM Manager) **Files updated:** - `/root/.openclaw/workspace/SOUL.md` - Audrey's main SOUL file - `/root/.openclaw/workspace/skills/smtl-team/SKILL.md` - Audrey's skill file - `/root/.openclaw/workspace/skills/smtl-subagents/tom-sdr-prospector/SKILL.md` - `/root/.openclaw/workspace/skills/smtl-subagents/elsie-lead-scorer/SKILL.md` - `/root/.openclaw/workspace/skills/smtl-subagents/jill-qualifier/SKILL.md` - `/root/.openclaw/workspace/skills/smtl-subagent",
+      "recallCount": 2,
+      "dailyCount": 0,
+      "groundedCount": 0,
+      "totalScore": 2,
+      "maxScore": 1,
+      "firstRecalledAt": "2026-04-25T14:18:14.171Z",
+      "lastRecalledAt": "2026-05-03T11:24:18.697Z",
+      "queryHashes": [
+        "9f0ca2289038",
+        "5d803de53dc3"
+      ],
+      "recallDays": [
+        "2026-04-25",
+        "2026-05-03"
+      ],
+      "conceptTags": [
+        "follow-up",
+        "openclaw/workspace/soul.md",
+        "elsie",
+        "lead",
+        "scorer",
+        "jill",
+        "sdr",
+        "qualifier"
+      ]
+    },
+    "memory:memory/2026-03-10.md:1:18": {
+      "key": "memory:memory/2026-03-10.md:1:18",
+      "path": "memory/2026-03-10.md",
+      "startLine": 1,
+      "endLine": 18,
+      "source": "memory",
+      "snippet": "# 2026-03-10 ## Session: Audrey (SMTL mode) - Ken greeted me as \"Audrey\" to switch to SMTL role - We discussed setting up memory files - Created MEMORY.md (long-term) and memory/2026-03-10.md (short-term) - Spawned Tom (SD to findR Prospector) 15-20 UK social sellers on TikTok/Instagram/Facebook - Waiting for Tom's TikTok prospect list ## Tasks - ## Notes - Memory files now set up",
+      "recallCount": 4,
+      "dailyCount": 0,
+      "groundedCount": 0,
+      "totalScore": 3.634083301788402,
+      "maxScore": 1,
+      "firstRecalledAt": "2026-04-25T15:27:32.832Z",
+      "lastRecalledAt": "2026-05-03T11:25:19.192Z",
+      "queryHashes": [
+        "1e69a1e8aacc",
+        "f7c8599c4716",
+        "4290d3747217",
+        "47f0df40e48b"
+      ],
+      "recallDays": [
+        "2026-04-25",
+        "2026-04-28",
+        "2026-05-03"
+      ],
+      "conceptTags": [
+        "memory.md",
+        "long-term",
+        "memory/2026-03-10.md",
+        "short-term",
+        "15-20",
+        "tiktok/instagram/facebook",
+        "audrey",
+        "smtl"
+      ]
+    },
+    "memory:memory/2026-04-01.md:1:66": {
+      "key": "memory:memory/2026-04-01.md:1:66",
+      "path": "memory/2026-04-01.md",
+      "startLine": 1,
+      "endLine": 66,
+      "source": "memory",
+      "snippet": "# Dustid Weekly Workflow Report — April 1, 2026 ## Summary **Date:** Wednesday, April 1st, 2026 — 6:00 AM UTC **Status:** ⚠️ PARTIAL — Tools limited, pipeline needs attention --- ## Pipeline Status | Stage | Agent | Status | Count | |-------|-------|--------|-------| | 1 | Tom (Prospecting) | ⚠️ BLOCKED | 0 new (see below) | | 2 | Elsie (Scoring) | ⏸️ WAITING | 0 new to score | | 3 | Jill (Qualification) | ⏸️ PENDING | PRIORITY leads from last week | | 4 | Sandra (Outreach) | ⏸️ PENDING | — | | 5 | Kendy (Follow-up) | ⏸️ PENDING | — | --- ## Current Lead Inventory **Total in Sheet:** 92 leads **By Tier:** - PRIORITY: 8 - HOT: 20 - WARM: 33 - COLD: 12 - Unscored: 19 **By Platform:",
+      "recallCount": 6,
+      "dailyCount": 0,
+      "groundedCount": 0,
+      "totalScore": 6,
+      "maxScore": 1,
+      "firstRecalledAt": "2026-04-28T10:54:33.779Z",
+      "lastRecalledAt": "2026-05-03T11:25:19.192Z",
+      "queryHashes": [
+        "8749b77d930d",
+        "f7c8599c4716",
+        "217c8cc26c2b",
+        "5d803de53dc3",
+        "4290d3747217",
+        "47f0df40e48b"
+      ],
+      "recallDays": [
+        "2026-04-28",
+        "2026-05-03"
+      ],
+      "conceptTags": [
+        "follow-up",
+        "dustid",
+        "weekly",
+        "workflow",
+        "report",
+        "april",
+        "summary",
+        "date"
+      ]
+    },
+    "memory:memory/2026-04-01.md:55:108": {
+      "key": "memory:memory/2026-04-01.md:55:108",
+      "path": "memory/2026-04-01.md",
+      "startLine": 55,
+      "endLine": 108,
+      "source": "memory",
+      "snippet": "- No outreach messages have been sent yet --- ## Recommendations for Ken ### Immediate Actions Needed: 1. **Fix Xpoz MCP** — Run `clawhub install xpoz-setup` and authenticate 2. **Fix browser** — Restart gateway if browser keeps timing out 3. **Configure Brave Search** — Run `openclaw configure --section web` to add API key ### Pipeline Actions: 1. **Jill needs to finish** qualification briefs for 8 PRIORITY leads 2. **Sandra needs to write** outreach messages for HOT leads (20) 3. **Start outreach** to WARM leads (33) 4. **Tom needs to add** 20-30 fresh leads (current inventory is depleted) --- ## Leads Ready for Action ### PRIORITY Leads (awaiting qualification): | Lead ID | Platf",
+      "recallCount": 5,
+      "dailyCount": 0,
+      "groundedCount": 0,
+      "totalScore": 5,
+      "maxScore": 1,
+      "firstRecalledAt": "2026-04-28T10:54:33.779Z",
+      "lastRecalledAt": "2026-05-03T11:28:16.511Z",
+      "queryHashes": [
+        "8749b77d930d",
+        "f7c8599c4716",
+        "217c8cc26c2b",
+        "4290d3747217",
+        "e9c9f652dcb7"
+      ],
+      "recallDays": [
+        "2026-04-28",
+        "2026-05-03"
+      ],
+      "conceptTags": [
+        "gateway",
+        "xpoz-setup",
+        "20-30",
+        "outreach",
+        "messages",
+        "been",
+        "sent",
+        "yet"
+      ]
+    },
+    "memory:memory/2026-03-23.md:1:49": {
+      "key": "memory:memory/2026-03-23.md:1:49",
+      "path": "memory/2026-03-23.md",
+      "startLine": 1,
+      "endLine": 49,
+      "source": "memory",
+      "snippet": "# 2026-03-23 - Tom Prospecting Session ## What Happened - Tom's first prospecting session was finally successful! - Used OpenClaw browser to search TikTok for UK small business sellers - Found and verified ~100 UK TikTok leads - All added to Google Sheet (Leads Master tab) ## Key Discovery **The browser search works!** TikTok search for \"handmade UK\", \"candles UK\", \"jewellery UK\", etc. returns user profiles that can be verified for: - UK location - No online store (bio links to Google Forms, PayPal, WhatsApp only) - Follower/like counts - Product categories ## Issues Encountered 1. ❌ TikTok Creative Center - blocked by network 2. ❌ TikTok API (yt-dlp, tiktok-scraper) - blocked by TikTo",
+      "recallCount": 3,
+      "dailyCount": 0,
+      "groundedCount": 0,
+      "totalScore": 3,
+      "maxScore": 1,
+      "firstRecalledAt": "2026-04-28T10:54:33.779Z",
+      "lastRecalledAt": "2026-05-03T11:25:19.192Z",
+      "queryHashes": [
+        "8749b77d930d",
+        "4290d3747217",
+        "47f0df40e48b"
+      ],
+      "recallDays": [
+        "2026-04-28",
+        "2026-05-03"
+      ],
+      "conceptTags": [
+        "network",
+        "follower/like",
+        "yt-dlp",
+        "tiktok-scraper",
+        "tom",
+        "prospecting",
+        "what",
+        "happened"
+      ]
+    },
+    "memory:memory/2026-03-27.md:1:28": {
+      "key": "memory:memory/2026-03-27.md:1:28",
+      "path": "memory/2026-03-27.md",
+      "startLine": 1,
+      "endLine": 28,
+      "source": "memory",
+      "snippet": "# 2026-03-27 ## Morning Session ### Test Prospecting Runs - Ran two test sessions for TikTok and Instagram prospecting - Instagram test completed: Found 6 leads - TikTok test timed out (checking Google Sheet format) ### Issues Identified 1. Xpoz MCP returns limited profile data 2. Geographic filtering not available 3. Need browser verification for bio details ### Ken's Feedback - Re-run TikTok test with proper approach - Cross-reference leads against Lead Master to prevent duplicates - Never repeat a lead ### Afternoon Runs - Spawned two new subagent sessions: - tiktok-prospect-rerun (label: tiktok-prospect-rerun) - instagram-prospect-rerun (label: instagram-prospect-rerun) - Both e",
+      "recallCount": 3,
+      "dailyCount": 0,
+      "groundedCount": 0,
+      "totalScore": 2.63217574539443,
+      "maxScore": 1,
+      "firstRecalledAt": "2026-04-28T10:54:33.779Z",
+      "lastRecalledAt": "2026-05-03T11:24:27.985Z",
+      "queryHashes": [
+        "8749b77d930d",
+        "f7c8599c4716",
+        "4290d3747217"
+      ],
+      "recallDays": [
+        "2026-04-28",
+        "2026-05-03"
+      ],
+      "conceptTags": [
+        "re-run",
+        "cross-reference",
+        "tiktok-prospect-rerun",
+        "instagram-prospect-rerun",
+        "morning",
+        "test",
+        "prospecting",
+        "runs"
+      ]
+    },
+    "memory:memory/2026-03-30.md:44:83": {
+      "key": "memory:memory/2026-03-30.md:44:83",
+      "path": "memory/2026-03-30.md",
+      "startLine": 44,
+      "endLine": 83,
+      "source": "memory",
+      "snippet": "| IG-023 | Instagram | phoenixcandlecompany | Candle Business Scaling Pain | --- ### NEW LEADS DISCOVERED (10) Instagram: - @bespoke_chocolateinc (HOT) — DM to order, Mother's Day - @ecandles.uk (HOT) — Active posting, UK delivery - @karoandclay (WARM) — UK polymer clay earrings - @bella.flores8 (HOT) — Yorkshire florist, seasonal - @meeksandpooch (WARM) — Homemade dog treats UK - @theartisancave (HOT) — Gift shop, DM orders TikTok: - @candlesbycoco (PRIORITY) — Google Form chaos - @lovejewelleryuk (PRIORITY) — DM overwhelm - @resin_handmadeuk (PRIORITY) — Growing, no backend - @phoenixcandleco (HOT) — Scaling pain --- ### NOTES - Jill's qualification timed out — requires live social",
+      "recallCount": 3,
+      "dailyCount": 0,
+      "groundedCount": 0,
+      "totalScore": 3,
+      "maxScore": 1,
+      "firstRecalledAt": "2026-04-28T10:54:38.071Z",
+      "lastRecalledAt": "2026-05-03T11:37:17.348Z",
+      "queryHashes": [
+        "f7c8599c4716",
+        "e9c9f652dcb7",
+        "867e86ca4d0f"
+      ],
+      "recallDays": [
+        "2026-04-28",
+        "2026-05-03"
+      ],
+      "conceptTags": [
+        "ig-023",
+        "bespoke-chocolateinc",
+        "ecandles.uk",
+        "bella.flores8",
+        "resin-handmadeuk",
+        "instagram",
+        "phoenixcandlecompany",
+        "candle"
+      ]
+    },
+    "memory:memory/2026-04-23.md:31:57": {
+      "key": "memory:memory/2026-04-23.md:31:57",
+      "path": "memory/2026-04-23.md",
+      "startLine": 31,
+      "endLine": 57,
+      "source": "memory",
+      "snippet": "4. Verify virality/DM chaos signal ### New Required Fields: - Store_Check: \"NO STORE FOUND\" or \"DISQUALIFIED: [reason]\" - Virality_Signal: Description of DM chaos or spike - Disqualification_Reason: (If skipped) Why - Bio_Link_Checked: \"YES\" - Marketplace_Search: \"YES - none found\" or \"FOUND: [platform]\" ## Files Updated: - `/skills/smtl-scout/SKILL.md` — Updated with disqualification rules, store detection workflow, new required fields ## Updated Requirements (10:18 UTC): - **100-150 prospects per session** (up from 20-50) - **DM chaos MUST be recent** — within last 0-72 hours only - Signals older than 72 hours are DISQUALIFIED (urgency window closed) ## Updated Requirements (10:23 UTC)",
+      "recallCount": 3,
+      "dailyCount": 0,
+      "groundedCount": 0,
+      "totalScore": 3,
+      "maxScore": 1,
+      "firstRecalledAt": "2026-04-29T20:07:02.718Z",
+      "lastRecalledAt": "2026-05-03T11:37:17.348Z",
+      "queryHashes": [
+        "c03a5e0bc208",
+        "4290d3747217",
+        "867e86ca4d0f"
+      ],
+      "recallDays": [
+        "2026-04-29",
+        "2026-05-03"
+      ],
+      "conceptTags": [
+        "virality/dm",
+        "store-check",
+        "virality-signal",
+        "disqualification-reason",
+        "bio-link-checked",
+        "marketplace-search",
+        "skills/smtl-scout/skill.md",
+        "100-150"
+      ]
+    },
+    "memory:memory/2026-04-23.md:1:40": {
+      "key": "memory:memory/2026-04-23.md:1:40",
+      "path": "memory/2026-04-23.md",
+      "startLine": 1,
+      "endLine": 40,
+      "source": "memory",
+      "snippet": "# April 23, 2026 — Tom's Prospecting Criteria Updated ## Change Requested by Ken Ken identified that previous PRIORITY/HOT leads had discrepancies — some leads did not exhibit virality or DM chaos that would warrant urgency for a Dustid ecommerce store. ## New Strict Disqualification Rules Added ### HARD DISQUALIFIERS (Skip immediately if ANY are true): 1. Has a store on their own website 2. Has an Etsy store 3. Has a Depop store 4. Has a Vinted store 5. Has an Amazon store 6. Has an eBay store 7. Linktree contains ANY store links 8. NO DM chaos or virality signal detected ### What Counts as \"DM Chaos / Virality\": - Bio says \"DM to order\" or \"Message to buy\" - Recent post says \"DM me\" or",
+      "recallCount": 2,
+      "dailyCount": 0,
+      "groundedCount": 0,
+      "totalScore": 2,
+      "maxScore": 1,
+      "firstRecalledAt": "2026-05-03T11:24:18.697Z",
+      "lastRecalledAt": "2026-05-03T11:25:19.192Z",
+      "queryHashes": [
+        "5d803de53dc3",
+        "47f0df40e48b"
+      ],
+      "recallDays": [
+        "2026-05-03"
+      ],
+      "conceptTags": [
+        "priority/hot",
+        "april",
+        "tom's",
+        "prospecting",
+        "criteria",
+        "updated",
+        "change",
+        "requested"
+      ]
+    }
+  }
+}

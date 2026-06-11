@@ -1,0 +1,11 @@
+{
+  "mcpServers": {
+    "xpoz": {
+      "baseUrl": "https://mcp.xpoz.ai/mcp",
+      "headers": {
+        "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJoZWFsdGhoYXJtb255aGF2ZW5AZ21haWwuY29tIiwiY2xpZW50X2lkIjoiNTZjZDZjZGMtZjZiNC00OWZmLTgwMTctNDU5M2RlYWUzN2JkIiwiaXNzIjoiaHR0cHM6Ly9tY3AueHBvei5haSIsImF1ZCI6Imh0dHBzOi8vbWNwLnhwb3ouYWkiLCJleHAiOjE3NzU2ODQ1MjUsImlhdCI6MTc3MzA5MjUyNSwidXNlciI6eyJlbWFpbCI6ImhlYWx0aGhhcm1vbnloYXZlbkBnbWFpbC5jb20iLCJuYW1lIjoiSGVhbHRoIGFuZCBIYXJtb255IEhhdmVuIiwicHJvdmlkZXJJZCI6IjEwMzQyNTUwMDQxNzM5MDU0Njk4NiIsInBpY3R1cmUiOiJodHRwczovL2xoMy5nb29nbGV1c2VyY29udGVudC5jb20vYS9BQ2c4b2NJQkxHenYtVUxLUFpHR2NITlFQU1NCV0M2X1BfR2NqLU5uTmdJU2N0eGhWRWxBbGlRPXM5Ni1jIiwicHJvdmlkZXIiOiJnb29nbGUifX0.Do03wT3p8rbua3tXxtpdKg-jW8Tjc0p2IwdwYblULuY"
+      }
+    }
+  },
+  "imports": []
+}

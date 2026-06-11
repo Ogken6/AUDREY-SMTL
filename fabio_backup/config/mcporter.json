@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "google-drive": {
+      "baseUrl": "https://drivemcp.googleapis.com/mcp/v1"
+    }
+  },
+  "imports": []
+}

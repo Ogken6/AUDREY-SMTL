@@ -1,0 +1,1448 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dustid Mission Control</title>
+    <style>
+        :root {
+            --bg-dark: #0a0a0f;
+            --bg-card: #12121a;
+            --bg-hover: #1a1a25;
+            --border: #2a2a3a;
+            --text-primary: #e0e0e0;
+            --text-secondary: #888;
+            --accent: #6366f1;
+            --accent-hover: #818cf8;
+            --success: #22c55e;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --info: #3b82f6;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: var(--bg-dark);
+            color: var(--text-primary);
+            min-height: 100vh;
+        }
+
+        .header {
+            background: var(--bg-card);
+            border-bottom: 1px solid var(--border);
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header h1 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .header h1::before {
+            content: '🎯';
+        }
+
+        .header-controls {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .btn {
+            background: var(--accent);
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.875rem;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn:hover {
+            background: var(--accent-hover);
+        }
+
+        .btn-secondary {
+            background: var(--bg-hover);
+            border: 1px solid var(--border);
+        }
+
+        .btn-secondary:hover {
+            background: var(--border);
+        }
+
+        .last-updated {
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+        }
+
+        .container {
+            padding: 2rem;
+            max-width: 1600px;
+            margin: 0 auto;
+        }
+
+        /* Metrics Grid */
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .metric-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.5rem;
+            transition: transform 0.2s;
+        }
+
+        .metric-card:hover {
+            transform: translateY(-2px);
+            border-color: var(--accent);
+        }
+
+        .metric-label {
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+            margin-bottom: 0.5rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .metric-value {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .metric-change {
+            font-size: 0.875rem;
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+        }
+
+        .metric-change.positive { color: var(--success); }
+        .metric-change.negative { color: var(--danger); }
+
+        /* Alerts Section */
+        .alerts-section {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .alerts-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .alerts-header h2 {
+            font-size: 1.125rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .alert-badge {
+            background: var(--danger);
+            color: white;
+            padding: 0.25rem 0.5rem;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .alert-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem;
+            background: rgba(239, 68, 68, 0.1);
+            border-left: 3px solid var(--danger);
+            border-radius: 6px;
+            margin-bottom: 0.5rem;
+        }
+
+        .alert-item.warning {
+            background: rgba(245, 158, 11, 0.1);
+            border-left-color: var(--warning);
+        }
+
+        .alert-item.info {
+            background: rgba(59, 130, 246, 0.1);
+            border-left-color: var(--info);
+        }
+
+        .alert-icon {
+            font-size: 1.25rem;
+        }
+
+        .alert-content {
+            flex: 1;
+        }
+
+        .alert-title {
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+        }
+
+        .alert-meta {
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+        }
+
+        .alert-action {
+            background: var(--danger);
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.875rem;
+        }
+
+        /* Pipeline Section */
+        .pipeline-section {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .section-header h2 {
+            font-size: 1.125rem;
+        }
+
+        .pipeline-stages {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 1rem;
+        }
+
+        .stage {
+            background: var(--bg-dark);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1rem;
+            min-height: 200px;
+        }
+
+        .stage-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .stage-name {
+            font-weight: 600;
+            font-size: 0.875rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .stage-count {
+            background: var(--accent);
+            color: white;
+            padding: 0.25rem 0.5rem;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .stage-lead {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            padding: 0.75rem;
+            margin-bottom: 0.5rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-size: 0.875rem;
+        }
+
+        .stage-lead:hover {
+            border-color: var(--accent);
+            background: var(--bg-hover);
+        }
+
+        .lead-id {
+            font-weight: 600;
+            color: var(--accent);
+        }
+
+        .lead-platform {
+            color: var(--text-secondary);
+            font-size: 0.75rem;
+        }
+
+        .lead-time {
+            color: var(--text-secondary);
+            font-size: 0.75rem;
+            margin-top: 0.25rem;
+        }
+
+        /* Agent Status */
+        .agents-section {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .agents-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1rem;
+        }
+
+        .agent-card {
+            background: var(--bg-dark);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1rem;
+        }
+
+        .agent-header {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 1rem;
+        }
+
+        .agent-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--accent);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+        }
+
+        .agent-name {
+            font-weight: 600;
+        }
+
+        .agent-role {
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+        }
+
+        .agent-status {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.875rem;
+        }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+        }
+
+        .status-dot.active { background: var(--success); }
+        .status-dot.idle { background: var(--warning); }
+        .status-dot.offline { background: var(--text-secondary); }
+
+        .agent-workload {
+            margin-top: 0.75rem;
+            display: flex;
+            gap: 1rem;
+            font-size: 0.875rem;
+        }
+
+        .workload-item {
+            color: var(--text-secondary);
+        }
+
+        .workload-item span {
+            color: var(--text-primary);
+            font-weight: 600;
+        }
+
+        /* Reports Section */
+        .reports-section {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.5rem;
+        }
+
+        .reports-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .report-card {
+            background: var(--bg-dark);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1rem;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .report-card:hover {
+            border-color: var(--accent);
+        }
+
+        .report-icon {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .report-name {
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+        }
+
+        .report-desc {
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+        }
+
+        /* Modal */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.8);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+        }
+
+        .modal {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 2rem;
+            max-width: 600px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .modal-header h2 {
+            font-size: 1.25rem;
+        }
+
+        .modal-close {
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        /* Settings Panel */
+        .settings-panel {
+            position: fixed;
+            top: 0;
+            right: -400px;
+            width: 400px;
+            height: 100vh;
+            background: var(--bg-card);
+            border-left: 1px solid var(--border);
+            padding: 2rem;
+            transition: right 0.3s;
+            z-index: 200;
+            overflow-y: auto;
+        }
+
+        .settings-panel.active {
+            right: 0;
+        }
+
+        .settings-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+
+        .settings-group {
+            margin-bottom: 2rem;
+        }
+
+        .settings-group h3 {
+            font-size: 0.875rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+        }
+
+        .setting-item {
+            margin-bottom: 1rem;
+        }
+
+        .setting-item label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-size: 0.875rem;
+        }
+
+        .setting-item input,
+        .setting-item select {
+            width: 100%;
+            background: var(--bg-dark);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            padding: 0.75rem;
+            color: var(--text-primary);
+            font-size: 0.875rem;
+        }
+
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            display: none;
+            z-index: 150;
+        }
+
+        .overlay.active {
+            display: block;
+        }
+
+        /* Loading State */
+        .loading {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 3rem;
+            color: var(--text-secondary);
+        }
+
+        .loading::after {
+            content: '';
+            width: 20px;
+            height: 20px;
+            border: 2px solid var(--border);
+            border-top-color: var(--accent);
+            border-radius: 50%;
+            margin-left: 0.5rem;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Empty State */
+        .empty-state {
+            text-align: center;
+            padding: 3rem;
+            color: var(--text-secondary);
+        }
+
+        /* Campaign Selector */
+        .campaign-selector {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .campaign-btn {
+            background: var(--bg-hover);
+            border: 1px solid var(--border);
+            color: var(--text-secondary);
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.875rem;
+            transition: all 0.2s;
+        }
+
+        .campaign-btn.active {
+            background: var(--accent);
+            color: white;
+            border-color: var(--accent);
+        }
+
+        .campaign-btn:hover:not(.active) {
+            border-color: var(--accent);
+            color: var(--text-primary);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header {
+                flex-direction: column;
+                gap: 1rem;
+                padding: 1rem;
+            }
+
+            .container {
+                padding: 1rem;
+            }
+
+            .metrics-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .settings-panel {
+                width: 100%;
+                right: -100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <h1>Dustid Mission Control</h1>
+        <div class="header-controls">
+            <span class="last-updated" id="lastUpdated">Never updated</span>
+            <button class="btn" onclick="refreshData()">
+                <span>↻</span> Refresh
+            </button>
+            <button class="btn btn-secondary" onclick="openSettings()">
+                <span>⚙</span> Settings
+            </button>
+        </div>
+    </header>
+
+    <main class="container">
+        <!-- Campaign Selector -->
+        <div class="campaign-selector" id="campaignSelector">
+            <button class="campaign-btn active" data-campaign="social-sellers">Social Sellers Campaign</button>
+            <button class="campaign-btn" data-campaign="dustid-ecommerce">Dustid Ecommerce</button>
+            <button class="campaign-btn" data-campaign="add-new">+ Add Campaign</button>
+        </div>
+
+        <!-- Metrics -->
+        <div class="metrics-grid" id="metricsGrid">
+            <div class="metric-card">
+                <div class="metric-label">Total Leads</div>
+                <div class="metric-value" id="totalLeads">-</div>
+                <div class="metric-change positive">↑ <span id="leadsChange">0</span> this week</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-label">PRIORITY</div>
+                <div class="metric-value" id="priorityCount">-</div>
+                <div class="metric-change">Need immediate action</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-label">Messages Sent</div>
+                <div class="metric-value" id="messagesSent">-</div>
+                <div class="metric-change positive">↑ <span id="messagesChange">0</span> today</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-label">Response Rate</div>
+                <div class="metric-value" id="responseRate">-%</div>
+                <div class="metric-change">Target: 15-25%</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-label">Consultations Booked</div>
+                <div class="metric-value" id="consultationsBooked">-</div>
+                <div class="metric-change positive">From <span id="conversionLeads">0</span> leads</div>
+            </div>
+        </div>
+
+        <!-- Alerts -->
+        <section class="alerts-section">
+            <div class="alerts-header">
+                <h2>🚨 Urgent Alerts</h2>
+                <span class="alert-badge" id="alertCount">0</span>
+            </div>
+            <div id="alertsList">
+                <div class="empty-state">No urgent alerts at this time</div>
+            </div>
+        </section>
+
+        <!-- Pipeline -->
+        <section class="pipeline-section">
+            <div class="section-header">
+                <h2>📊 Pipeline Overview</h2>
+                <button class="btn btn-secondary" onclick="viewAllLeads()">View All</button>
+            </div>
+            <div class="pipeline-stages" id="pipelineStages">
+                <!-- Stages populated by JS -->
+            </div>
+        </section>
+
+        <!-- Agent Status -->
+        <section class="agents-section">
+            <div class="section-header">
+                <h2>👥 Team Status</h2>
+                <button class="btn btn-secondary" onclick="viewAgentDetails()">Details</button>
+            </div>
+            <div class="agents-grid" id="agentsGrid">
+                <!-- Agents populated by JS -->
+            </div>
+        </section>
+
+        <!-- Reports -->
+        <section class="reports-section">
+            <div class="section-header">
+                <h2>📈 Generate Reports</h2>
+            </div>
+            <div class="reports-grid">
+                <div class="report-card" onclick="generateReport('daily')">
+                    <div class="report-icon">📋</div>
+                    <div class="report-name">Daily Summary</div>
+                    <div class="report-desc">Pipeline activity, new leads, messages sent</div>
+                </div>
+                <div class="report-card" onclick="generateReport('weekly')">
+                    <div class="report-icon">📊</div>
+                    <div class="report-name">Weekly Report</div>
+                    <div class="report-desc">Conversion rates, team performance, trends</div>
+                </div>
+                <div class="report-card" onclick="generateReport('founder')">
+                    <div class="report-icon">🎯</div>
+                    <div class="report-name">Founder Report</div>
+                    <div class="report-desc">Executive summary with key metrics</div>
+                </div>
+                <div class="report-card" onclick="generateReport('full')">
+                    <div class="report-icon">📑</div>
+                    <div class="report-name">Full Export</div>
+                    <div class="report-desc">All data as PDF + Excel</div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Settings Panel -->
+    <div class="overlay" id="overlay" onclick="closeSettings()"></div>
+    <aside class="settings-panel" id="settingsPanel">
+        <div class="settings-header">
+            <h2>⚙ Settings</h2>
+            <button class="modal-close" onclick="closeSettings()">×</button>
+        </div>
+
+        <div class="settings-group">
+            <h3>Google Sheets Connection</h3>
+            <div class="setting-item">
+                <label>Sheet ID</label>
+                <input type="text" id="sheetId" placeholder="1bOR0HY_tg73-d6cjMpouN9jjY8meyl4ma1kCte3rqqg">
+            </div>
+            <div class="setting-item">
+                <label>API Key</label>
+                <input type="password" id="apiKey" placeholder="AIzaSy...">
+            </div>
+        </div>
+
+        <div class="settings-group">
+            <h3>Alert Channels</h3>
+            <div class="setting-item">
+                <label>Telegram Bot Token</label>
+                <input type="password" id="telegramToken" placeholder="Optional - for alerts">
+            </div>
+            <div class="setting-item">
+                <label>Telegram Chat ID</label>
+                <input type="text" id="telegramChat" placeholder="@yourchannel or chat ID">
+            </div>
+            <div class="setting-item">
+                <label>Email for Alerts</label>
+                <input type="email" id="alertEmail" value="dustidsales@gmail.com">
+            </div>
+        </div>
+
+        <div class="settings-group">
+            <h3>Dashboard</h3>
+            <div class="setting-item">
+                <label>Auto-refresh interval (minutes)</label>
+                <select id="refreshInterval">
+                    <option value="5">5 minutes</option>
+                    <option value="15" selected>15 minutes</option>
+                    <option value="30">30 minutes</option>
+                    <option value="60">1 hour</option>
+                </select>
+            </div>
+        </div>
+
+        <button class="btn" onclick="saveSettings()" style="width: 100%;">Save Settings</button>
+    </aside>
+
+    <!-- Lead Detail Modal -->
+    <div class="modal-overlay" id="leadModal">
+        <div class="modal">
+            <div class="modal-header">
+                <h2 id="modalTitle">Lead Details</h2>
+                <button class="modal-close" onclick="closeModal()">×</button>
+            </div>
+            <div id="modalContent">
+                <!-- Content populated by JS -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ==================== CONFIGURATION ====================
+        const DEFAULT_CONFIG = {
+            sheetId: '1bOR0HY_tg73-d6cjMpouN9jjY8meyl4ma1kCte3rqqg',
+            apiKey: 'AIzaSyALDFejLlxZM_4uEQwkDSPkVgkPBzY-UKo',
+            refreshInterval: 15,
+            telegramToken: '',
+            telegramChat: '',
+            alertEmail: 'dustidsales@gmail.com'
+        };
+
+        let config = {};
+        let currentData = null;
+        let currentCampaign = 'social-sellers';
+
+        // ==================== INITIALIZATION ====================
+        document.addEventListener('DOMContentLoaded', () => {
+            loadConfig();
+            initializeDashboard();
+            setupCampaignSelector();
+        });
+
+        function loadConfig() {
+            const saved = localStorage.getItem('dustid-dashboard-config');
+            config = saved ? JSON.parse(saved) : { ...DEFAULT_CONFIG };
+            
+            // Apply config to settings form
+            document.getElementById('sheetId').value = config.sheetId || '';
+            document.getElementById('apiKey').value = config.apiKey || '';
+            document.getElementById('telegramToken').value = config.telegramToken || '';
+            document.getElementById('telegramChat').value = config.telegramChat || '';
+            document.getElementById('alertEmail').value = config.alertEmail || '';
+            document.getElementById('refreshInterval').value = config.refreshInterval || 15;
+        }
+
+        function saveSettings() {
+            config = {
+                sheetId: document.getElementById('sheetId').value,
+                apiKey: document.getElementById('apiKey').value,
+                telegramToken: document.getElementById('telegramToken').value,
+                telegramChat: document.getElementById('telegramChat').value,
+                alertEmail: document.getElementById('alertEmail').value,
+                refreshInterval: parseInt(document.getElementById('refreshInterval').value)
+            };
+            localStorage.setItem('dustid-dashboard-config', JSON.stringify(config));
+            closeSettings();
+            refreshData();
+            alert('Settings saved!');
+        }
+
+        function initializeDashboard() {
+            refreshData();
+            // Set up auto-refresh
+            setInterval(refreshData, (config.refreshInterval || 15) * 60 * 1000);
+        }
+
+        function setupCampaignSelector() {
+            document.getElementById('campaignSelector').addEventListener('click', (e) => {
+                if (e.target.classList.contains('campaign-btn')) {
+                    document.querySelectorAll('.campaign-btn').forEach(btn => btn.classList.remove('active'));
+                    e.target.classList.add('active');
+                    currentCampaign = e.target.dataset.campaign;
+                    refreshData();
+                }
+            });
+        }
+
+        // ==================== DATA FETCHING ====================
+        async function refreshData() {
+            const lastUpdated = document.getElementById('lastUpdated');
+            lastUpdated.textContent = 'Updating...';
+
+            try {
+                const data = await fetchSheetData();
+                currentData = processData(data);
+                updateDashboard(currentData);
+                saveSnapshot(currentData);
+                lastUpdated.textContent = 'Updated ' + new Date().toLocaleTimeString();
+            } catch (error) {
+                console.error('Error fetching data:', error);
+                lastUpdated.textContent = 'Update failed - ' + error.message;
+                // Try to load from cache
+                loadCachedData();
+            }
+        }
+
+        async function fetchSheetData() {
+            const sheetId = config.sheetId || DEFAULT_CONFIG.sheetId;
+            const apiKey = config.apiKey || DEFAULT_CONFIG.apiKey;
+            
+            const response = await fetch(
+                `https://sheets.googleapis.com/v4/spreadsheets/${sheetId}/values/LEADS_MASTER!A:Z?key=${apiKey}`
+            );
+            
+            if (!response.ok) {
+                throw new Error('Failed to fetch sheet data');
+            }
+            
+            return await response.json();
+        }
+
+        function processData(sheetData) {
+            const rows = sheetData.values || [];
+            if (rows.length < 2) return { leads: [], alerts: [], metrics: {} };
+
+            const headers = rows[0];
+            const leads = [];
+            
+            const colMap = {
+                leadId: headers.indexOf('Lead_ID'),
+                dateAdded: headers.indexOf('Date_Added'),
+                platform: headers.indexOf('Platform'),
+                username: headers.indexOf('Username'),
+                displayName: headers.indexOf('Display_Name'),
+                profileUrl: headers.indexOf('Profile_URL'),
+                followers: headers.indexOf('Followers_Count'),
+                bio: headers.indexOf('Bio'),
+                location: headers.indexOf('Location'),
+                product: headers.indexOf('Product_Category'),
+                icpScore: headers.indexOf('ICP_Score'),
+                icpTier: headers.indexOf('ICP_Tier'),
+                messagingAngle: headers.indexOf('Messaging_Angle'),
+                hook: headers.indexOf('Personalization_Hook'),
+                status: headers.indexOf('Conversation_Status'),
+                crmStatus: headers.indexOf('CRM_Status')
+            };
+
+            for (let i = 1; i < rows.length; i++) {
+                const row = rows[i];
+                if (!row[colMap.leadId]) continue;
+                
+                leads.push({
+                    leadId: row[colMap.leadId] || '',
+                    dateAdded: row[colMap.dateAdded] || '',
+                    platform: row[colMap.platform] || '',
+                    username: row[colMap.username] || '',
+                    displayName: row[colMap.displayName] || '',
+                    profileUrl: row[colMap.profileUrl] || '',
+                    followers: row[colMap.followers] || '',
+                    bio: row[colMap.bio] || '',
+                    location: row[colMap.location] || '',
+                    product: row[colMap.product] || '',
+                    icpScore: row[colMap.icpScore] || '',
+                    icpTier: (row[colMap.icpTier] || '').toUpperCase().trim(),
+                    messagingAngle: row[colMap.messagingAngle] || '',
+                    hook: row[colMap.hook] || '',
+                    status: (row[colMap.status] || '').trim(),
+                    crmStatus: row[colMap.crmStatus] || ''
+                });
+            }
+
+            // Generate alerts
+            const alerts = generateAlerts(leads);
+
+            // Calculate metrics
+            const metrics = calculateMetrics(leads);
+
+            return { leads, alerts, metrics };
+        }
+
+        function generateAlerts(leads) {
+            const alerts = [];
+            const now = new Date();
+
+            leads.forEach(lead => {
+                // Check for PRIORITY leads without messages
+                if (lead.icpTier === 'PRIORITY' && !lead.messagingAngle) {
+                    const hoursSince = getHoursSince(lead.dateAdded);
+                    if (hoursSince > 2) {
+                        alerts.push({
+                            type: 'urgent',
+                            title: `PRIORITY lead needs message: ${lead.leadId}`,
+                            message: `${lead.displayName} (@${lead.username}) has been waiting ${Math.floor(hoursSince)} hours`,
+                            lead: lead
+                        });
+                    }
+                }
+
+                // Check for HOT leads waiting too long
+                if (lead.icpTier === 'HOT' && !lead.messagingAngle) {
+                    const daysSince = getDaysSince(lead.dateAdded);
+                    if (daysSince > 1) {
+                        alerts.push({
+                            type: 'warning',
+                            title: `HOT lead needs attention: ${lead.leadId}`,
+                            message: `${lead.displayName} has been waiting ${Math.floor(daysSince)} days`,
+                            lead: lead
+                        });
+                    }
+                }
+
+                // Check for leads stuck in Qualified status
+                if (lead.status === 'Qualified' && !lead.crmStatus) {
+                    alerts.push({
+                        type: 'info',
+                        title: `Lead ready for CRM: ${lead.leadId}`,
+                        message: `${lead.displayName} is qualified but not in CRM`,
+                        lead: lead
+                    });
+                }
+            });
+
+            return alerts.sort((a, b) => {
+                const priority = { urgent: 3, warning: 2, info: 1 };
+                return priority[b.type] - priority[a.type];
+            });
+        }
+
+        function calculateMetrics(leads) {
+            const total = leads.length;
+            const priority = leads.filter(l => l.icpTier === 'PRIORITY').length;
+            const hot = leads.filter(l => l.icpTier === 'HOT').length;
+            const warm = leads.filter(l => l.icpTier === 'WARM').length;
+            const messaged = leads.filter(l => l.messagingAngle && l.messagingAngle !== '').length;
+            const qualified = leads.filter(l => l.status === 'Qualified').length;
+            const draftReady = leads.filter(l => l.status === 'Draft Ready').length;
+
+            // Get response rate (simplified - in real implementation, check replies)
+            const responses = leads.filter(l => l.status === 'Responded').length;
+            const responseRate = messaged > 0 ? Math.round((responses / messaged) * 100) : 0;
+
+            // Get consultations (simplified)
+            const consultations = leads.filter(l => l.status === 'Booked').length;
+
+            return {
+                total,
+                priority,
+                hot,
+                warm,
+                messaged,
+                qualified,
+                draftReady,
+                responseRate,
+                consultations,
+                byPlatform: {
+                    tiktok: leads.filter(l => l.platform === 'TikTok').length,
+                    instagram: leads.filter(l => l.platform === 'Instagram').length,
+                    facebook: leads.filter(l => l.platform === 'Facebook').length
+                }
+            };
+        }
+
+        function getHoursSince(dateStr) {
+            if (!dateStr) return 0;
+            const date = new Date(dateStr);
+            return (new Date() - date) / (1000 * 60 * 60);
+        }
+
+        function getDaysSince(dateStr) {
+            return getHoursSince(dateStr) / 24;
+        }
+
+        // ==================== DASHBOARD UPDATES ====================
+        function updateDashboard(data) {
+            updateMetrics(data.metrics);
+            updateAlerts(data.alerts);
+            updatePipeline(data.leads);
+            updateAgents(data.leads);
+        }
+
+        function updateMetrics(metrics) {
+            document.getElementById('totalLeads').textContent = metrics.total;
+            document.getElementById('priorityCount').textContent = metrics.priority;
+            document.getElementById('messagesSent').textContent = metrics.messaged;
+            document.getElementById('responseRate').textContent = metrics.responseRate + '%';
+            document.getElementById('consultationsBooked').textContent = metrics.consultations;
+            document.getElementById('conversionLeads').textContent = metrics.messaged;
+
+            // Calculate changes from last snapshot
+            const lastSnapshot = getLastSnapshot();
+            if (lastSnapshot) {
+                const leadsChange = metrics.total - lastSnapshot.metrics.total;
+                document.getElementById('leadsChange').textContent = 
+                    (leadsChange >= 0 ? '+' : '') + leadsChange;
+            }
+        }
+
+        function updateAlerts(alerts) {
+            const container = document.getElementById('alertsList');
+            const badge = document.getElementById('alertCount');
+            
+            badge.textContent = alerts.length;
+            
+            if (alerts.length === 0) {
+                container.innerHTML = '<div class="empty-state">No urgent alerts at this time</div>';
+                return;
+            }
+
+            container.innerHTML = alerts.map(alert => `
+                <div class="alert-item ${alert.type}">
+                    <div class="alert-icon">${alert.type === 'urgent' ? '🚨' : alert.type === 'warning' ? '⚠️' : 'ℹ️'}</div>
+                    <div class="alert-content">
+                        <div class="alert-title">${alert.title}</div>
+                        <div class="alert-meta">${alert.message}</div>
+                    </div>
+                    <button class="alert-action" onclick="viewLead('${alert.lead.leadId}')">View</button>
+                </div>
+            `).join('');
+        }
+
+        function updatePipeline(leads) {
+            const stages = {
+                'New': leads.filter(l => !l.icpTier || l.icpTier === ''),
+                'Scored': leads.filter(l => l.icpTier && !l.messagingAngle && l.icpTier !== ''),
+                'Qualified': leads.filter(l => l.status === 'Qualified'),
+                'Draft Ready': leads.filter(l => l.status === 'Draft Ready'),
+                'Messaged': leads.filter(l => l.status === 'Messaged'),
+                'Responded': leads.filter(l => l.status === 'Responded'),
+                'Booked': leads.filter(l => l.status === 'Booked')
+            };
+
+            const container = document.getElementById('pipelineStages');
+            container.innerHTML = Object.entries(stages).map(([stageName, stageLeads]) => `
+                <div class="stage">
+                    <div class="stage-header">
+                        <span class="stage-name">${stageName}</span>
+                        <span class="stage-count">${stageLeads.length}</span>
+                    </div>
+                    ${stageLeads.slice(0, 5).map(lead => `
+                        <div class="stage-lead" onclick="viewLead('${lead.leadId}')">
+                            <div class="lead-id">${lead.leadId}</div>
+                            <div class="lead-platform">${lead.platform} • ${lead.icpTier || 'Unscored'}</div>
+                            <div class="lead-time">${lead.displayName}</div>
+                        </div>
+                    `).join('')}
+                    ${stageLeads.length > 5 ? `<div class="stage-lead" style="text-align: center; color: var(--text-secondary);">+${stageLeads.length - 5} more</div>` : ''}
+                </div>
+            `).join('');
+        }
+
+        function updateAgents(leads) {
+            // Simulate agent data based on lead ownership
+            // In real implementation, this would come from AGENT_QUEUE sheet
+            const agents = [
+                { name: 'Tom (Scout)', role: 'Prospecting', status: 'active', workload: { new: leads.filter(l => !l.icpTier).length } },
+                { name: 'Elsie (Scorer)', role: 'Lead Scoring', status: 'idle', workload: { queue: 0 } },
+                { name: 'Jill (Qualifier)', role: 'Qualification', status: 'active', workload: { priority: leads.filter(l => l.icpTier === 'PRIORITY' && !l.messagingAngle).length } },
+                { name: 'Sandra (Copywriter)', role: 'Message Writing', status: 'active', workload: { drafts: leads.filter(l => !l.messagingAngle && (l.icpTier === 'PRIORITY' || l.icpTier === 'HOT')).length } },
+                { name: 'Kendy (Follow-up)', role: 'Follow-ups', status: 'idle', workload: { pending: 0 } },
+                { name: 'Tyler (CRM)', role: 'CRM Management', status: 'active', workload: { ready: leads.filter(l => l.status === 'Draft Ready').length } }
+            ];
+
+            const container = document.getElementById('agentsGrid');
+            container.innerHTML = agents.map(agent => `
+                <div class="agent-card">
+                    <div class="agent-header">
+                        <div class="agent-avatar">${agent.name.charAt(0)}</div>
+                        <div>
+                            <div class="agent-name">${agent.name}</div>
+                            <div class="agent-role">${agent.role}</div>
+                        </div>
+                    </div>
+                    <div class="agent-status">
+                        <div class="status-dot ${agent.status}"></div>
+                        <span>${agent.status === 'active' ? 'Active' : agent.status === 'idle' ? 'Idle' : 'Offline'}</span>
+                    </div>
+                    <div class="agent-workload">
+                        ${Object.entries(agent.workload).map(([key, value]) => `
+                            <div class="workload-item">${key}: <span>${value}</span></div>
+                        `).join('')}
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // ==================== SNAPSHOT / HISTORY ====================
+        function saveSnapshot(data) {
+            const snapshots = JSON.parse(localStorage.getItem('dustid-snapshots') || '[]');
+            snapshots.push({
+                timestamp: new Date().toISOString(),
+                metrics: data.metrics
+            });
+            // Keep last 30 days
+            const cutoff = new Date();
+            cutoff.setDate(cutoff.getDate() - 30);
+            const filtered = snapshots.filter(s => new Date(s.timestamp) > cutoff);
+            localStorage.setItem('dustid-snapshots', JSON.stringify(filtered));
+        }
+
+        function getLastSnapshot() {
+            const snapshots = JSON.parse(localStorage.getItem('dustid-snapshots') || '[]');
+            return snapshots.length > 0 ? snapshots[snapshots.length - 1] : null;
+        }
+
+        function loadCachedData() {
+            const cached = localStorage.getItem('dustid-last-data');
+            if (cached) {
+                const data = JSON.parse(cached);
+                updateDashboard(data);
+                document.getElementById('lastUpdated').textContent = 'Using cached data';
+            }
+        }
+
+        // ==================== UI INTERACTIONS ====================
+        function openSettings() {
+            document.getElementById('settingsPanel').classList.add('active');
+            document.getElementById('overlay').classList.add('active');
+        }
+
+        function closeSettings() {
+            document.getElementById('settingsPanel').classList.remove('active');
+            document.getElementById('overlay').classList.remove('active');
+        }
+
+        function viewLead(leadId) {
+            const lead = currentData?.leads.find(l => l.leadId === leadId);
+            if (!lead) return;
+
+            document.getElementById('modalTitle').textContent = `${lead.leadId} - ${lead.displayName}`;
+            document.getElementById('modalContent').innerHTML = `
+                <div style="margin-bottom: 1rem;">
+                    <strong>Platform:</strong> ${lead.platform}<br>
+                    <strong>Username:</strong> @${lead.username}<br>
+                    <strong>Profile:</strong> <a href="${lead.profileUrl}" target="_blank" style="color: var(--accent);">${lead.profileUrl}</a><br>
+                    <strong>Followers:</strong> ${lead.followers}<br>
+                    <strong>Location:</strong> ${lead.location}<br>
+                    <strong>Product:</strong> ${lead.product}
+                </div>
+                <div style="margin-bottom: 1rem;">
+                    <strong>Bio:</strong><br>
+                    <div style="background: var(--bg-dark); padding: 0.75rem; border-radius: 6px; margin-top: 0.5rem;">${lead.bio || 'N/A'}</div>
+                </div>
+                <div style="margin-bottom: 1rem;">
+                    <strong>ICP Tier:</strong> <span style="color: ${lead.icpTier === 'PRIORITY' ? 'var(--danger)' : lead.icpTier === 'HOT' ? 'var(--warning)' : 'var(--text-primary)'};">${lead.icpTier || 'Unscored'}</span><br>
+                    <strong>Status:</strong> ${lead.status || 'New'}<br>
+                    <strong>CRM Status:</strong> ${lead.crmStatus || 'Not in CRM'}
+                </div>
+                <div>
+                    <strong>Messaging Angle:</strong><br>
+                    <div style="background: var(--bg-dark); padding: 0.75rem; border-radius: 6px; margin-top: 0.5rem;">${lead.messagingAngle || 'Not written yet'}</div>
+                </div>
+            `;
+            document.getElementById('leadModal').classList.add('active');
+        }
+
+        function closeModal() {
+            document.getElementById('leadModal').classList.remove('active');
+        }
+
+        function viewAllLeads() {
+            alert('Full lead list view coming in v2. Use the pipeline stages to browse leads.');
+        }
+
+        function viewAgentDetails() {
+            alert('Detailed agent view coming in v2.');
+        }
+
+        // ==================== REPORT GENERATION ====================
+        function generateReport(type) {
+            if (!currentData) {
+                alert('No data available. Please refresh first.');
+                return;
+            }
+
+            const reports = {
+                daily: generateDailyReport,
+                weekly: generateWeeklyReport,
+                founder: generateFounderReport,
+                full: generateFullExport
+            };
+
+            const report = reports[type](currentData);
+            
+            // Download as JSON (PDF/Excel export would require additional libraries)
+            const blob = new Blob([JSON.stringify(report, null, 2)], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `dustid-report-${type}-${new Date().toISOString().split('T')[0]}.json`;
+            a.click();
+            URL.revokeObjectURL(url);
+
+            alert(`${type.charAt(0).toUpperCase() + type.slice(1)} report generated and downloaded!`);
+        }
+
+        function generateDailyReport(data) {
+            return {
+                type: 'Daily Summary',
+                date: new Date().toISOString(),
+                summary: {
+                    totalLeads: data.metrics.total,
+                    newLeadsToday: data.leads.filter(l => isToday(l.dateAdded)).length,
+                    messagesSent: data.metrics.messaged,
+                    responsesToday: 0, // Would need reply tracking
+                    consultationsBooked: data.metrics.consultations
+                },
+                pipeline: {
+                    new: data.leads.filter(l => !l.icpTier).length,
+                    scored: data.leads.filter(l => l.icpTier && !l.status).length,
+                    qualified: data.metrics.qualified,
+                    draftReady: data.metrics.draftReady,
+                    messaged: data.leads.filter(l => l.status === 'Messaged').length
+                },
+                urgent: data.alerts.filter(a => a.type === 'urgent').length,
+                alerts: data.alerts.map(a => ({ type: a.type, title: a.title }))
+            };
+        }
+
+        function generateWeeklyReport(data) {
+            const snapshots = JSON.parse(localStorage.getItem('dustid-snapshots') || '[]');
+            const weekAgo = new Date();
+            weekAgo.setDate(weekAgo.getDate() - 7);
+            const weekSnapshots = snapshots.filter(s => new Date(s.timestamp) > weekAgo);
+
+            return {
+                type: 'Weekly Report',
+                weekStarting: weekAgo.toISOString(),
+                currentMetrics: data.metrics,
+                trends: {
+                    leadsAdded: data.metrics.total - (weekSnapshots[0]?.metrics.total || 0),
+                    conversionRate: data.metrics.responseRate
+                },
+                teamPerformance: {
+                    tom: { leadsFound: data.leads.filter(l => isThisWeek(l.dateAdded)).length },
+                    elsie: { leadsScored: data.leads.filter(l => l.icpTier && isThisWeek(l.dateAdded)).length },
+                    sandra: { messagesWritten: data.leads.filter(l => l.messagingAngle && isThisWeek(l.dateAdded)).length }
+                },
+                recommendations: generateRecommendations(data)
+            };
+        }
+
+        function generateFounderReport(data) {
+            return {
+                type: 'Founder Report',
+                executiveSummary: `Campaign has ${data.metrics.total} leads with ${data.metrics.priority} PRIORITY and ${data.metrics.hot} HOT leads requiring immediate attention.`,
+                keyMetrics: {
+                    totalLeads: data.metrics.total,
+                    qualifiedLeads: data.metrics.qualified + data.metrics.draftReady,
+                    messagesSent: data.metrics.messaged,
+                    responseRate: data.metrics.responseRate + '%',
+                    consultationsBooked: data.metrics.consultations
+                },
+                pipelineHealth: {
+                    status: data.alerts.filter(a => a.type === 'urgent').length > 0 ? '⚠️ Attention Needed' : '✅ Healthy',
+                    bottlenecks: data.alerts.filter(a => a.type === 'urgent').map(a => a.title)
+                },
+                nextWeekPriorities: [
+                    'Follow up on PRIORITY leads within 24 hours',
+                    'Complete messaging for all HOT leads',
+                    'Move qualified leads to CRM'
+                ]
+            };
+        }
+
+        function generateFullExport(data) {
+            return {
+                type: 'Full Export',
+                exportedAt: new Date().toISOString(),
+                allLeads: data.leads,
+                allAlerts: data.alerts,
+                metrics: data.metrics,
+                snapshots: JSON.parse(localStorage.getItem('dustid-snapshots') || '[]')
+            };
+        }
+
+        function generateRecommendations(data) {
+            const recs = [];
+            if (data.alerts.filter(a => a.type === 'urgent').length > 0) {
+                recs.push('Address urgent PRIORITY leads immediately');
+            }
+            if (data.metrics.responseRate < 15) {
+                recs.push('Review message quality - response rate below target');
+            }
+            if (data.leads.filter(l => !l.icpTier).length > 20) {
+                recs.push('Backlog of unscored leads - consider Elsie priority');
+            }
+            return recs;
+        }
+
+        // ==================== HELPERS ====================
+        function isToday(dateStr) {
+            if (!dateStr) return false;
+            const date = new Date(dateStr);
+            const today = new Date();
+            return date.toDateString() === today.toDateString();
+        }
+
+        function isThisWeek(dateStr) {
+            if (!dateStr) return false;
+            const date = new Date(dateStr);
+            const weekAgo = new Date();
+            weekAgo.setDate(weekAgo.getDate() - 7);
+            return date > weekAgo;
+        }
+
+        // ==================== ALERTS SYSTEM ====================
+        function sendAlert(message, type = 'info') {
+            // Telegram alert
+            if (config.telegramToken && config.telegramChat) {
+                fetch(`https://api.telegram.org/bot${config.telegramToken}/sendMessage`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        chat_id: config.telegramChat,
+                        text: `🎯 Dustid Alert [${type.toUpperCase()}]\n\n${message}`,
+                        parse_mode: 'HTML'
+                    })
+                }).catch(err => console.error('Telegram alert failed:', err));
+            }
+
+            // Email alert (would need backend or email service)
+            console.log(`Email alert to ${config.alertEmail}: ${message}`);
+        }
+
+        // Check for alerts every 5 minutes
+        setInterval(() => {
+            if (currentData && currentData.alerts.length > 0) {
+                const urgent = currentData.alerts.filter(a => a.type === 'urgent');
+                if (urgent.length > 0) {
+                    sendAlert(`${urgent.length} urgent leads need attention!`, 'urgent');
+                }
+            }
+        }, 5 * 60 * 1000);
+
+        console.log('🎯 Dustid Mission Control loaded');
+        console.log('Use refreshData() to manually update');
+    </script>
+</body>
+</html>

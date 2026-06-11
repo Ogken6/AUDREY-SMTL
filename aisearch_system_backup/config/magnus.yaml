@@ -1,0 +1,37 @@
+# config/magnus.yaml
+# Magnus pipeline orchestration configuration
+
+magnus:
+  pipeline_timeout_hours: 4
+
+  stage_timeout_minutes:
+    scout: 30
+    falcon: 90
+    sieve: 45
+    cartographer: 60
+    rival: 30
+    oracle_x: 30
+
+  retry_policy:
+    max_attempts: 3
+    backoff_seconds:
+      - 30
+      - 120
+      - 600
+
+  quality_gates:
+    falcon_min_completion_rate: 0.80
+    sieve_min_confidence: 0.75
+    cartographer_min_coverage: 0.60
+
+  notifications:
+    alert_on: [ERROR, CRITICAL]
+    summary_on: [pipeline_complete]
+
+  run_schedule:
+    full_pipeline: "0 2 * * *"           # 02:00 UTC daily
+    scout_refresh: "0 1 * * 1"          # 01:00 UTC Monday
+    competitive_snapshot: "0 6 * * *"    # 06:00 UTC daily
+    citation_graph_update: "0 */6 * * *" # Every 6 hours
+    oracle_x_recommendations: "0 8 * * 1" # 08:00 UTC Monday
+    sentinel_health: "*/15 * * * *"      # Every 15 minutes

@@ -1,0 +1,115 @@
+{
+  "platform": "tiktok",
+  "source": "Tom (Prospector)",
+  "date": "2026-03-11",
+  "leads": [
+    {
+      "id": "tt-001",
+      "handle": "@shop.honeybun",
+      "niche": "Candles",
+      "followers": "1.1M",
+      "signal": "High-volume order packing, DM chaos likely",
+      "status": "pending",
+      "notes": ""
+    },
+    {
+      "id": "tt-002",
+      "handle": "@cleopatressstudios",
+      "niche": "Fashion",
+      "followers": "247.6K",
+      "signal": "Business struggles, unexpected costs",
+      "status": "pending",
+      "notes": ""
+    },
+    {
+      "id": "tt-003",
+      "handle": "@glambrownies",
+      "niche": "Food/Brownies",
+      "followers": "236.1K",
+      "signal": "High engagement, DM orders",
+      "status": "pending",
+      "notes": ""
+    },
+    {
+      "id": "tt-004",
+      "handle": "@shineOnYou",
+      "niche": "Jewelry",
+      "followers": "12.9M",
+      "signal": "International shipping, address issues",
+      "status": "pending",
+      "notes": ""
+    },
+    {
+      "id": "tt-005",
+      "handle": "@hayleyjadedesign",
+      "n": "@hayleyiche": "Design/Packaging",
+      "followers": "184.7K",
+      "signal": "Packaging focus, order management",
+      "status": "pending",
+      "notes": ""
+    },
+    {
+      "id": "tt-006",
+      "handle": "@realashleighvlogs",
+      "niche": "Fashion",
+      "followers": "110K",
+      "signal": "Packing from home, scaling",
+      "status": "pending",
+      "notes": ""
+    },
+    {
+      "id": "tt-007",
+      "handle": "@makeitwithem",
+      "niche": "Handmade",
+      "followers": "72.6K",
+      "signal": "Custom orders via social",
+      "status": "pending",
+      "notes": ""
+    },
+    {
+      "id": "tt-008",
+      "handle": "@itsisobelperl",
+      "niche": "Skincare Coach",
+      "followers": "59.5K",
+      "signal": "Business coach with insights",
+      "status": "pending",
+      "notes": ""
+    },
+    {
+      "id": "tt-009",
+      "handle": "@vivientangg",
+      "niche": "Fashion/Depop",
+      "followers": "55K",
+      "signal": "Order management",
+      "status": "pending",
+      "notes": ""
+    },
+    {
+      "id": "tt-010",
+      "handle": "@uniqueboutiqueldn",
+      "niche": "Boutique",
+      "followers": "14.3K",
+      "signal": "Small business packing",
+      "status": "pending",
+      "notes": ""
+    },
+    {
+      "id": "tt-011",
+      "handle": "@alisonbarbs",
+      "niche": "Clothing",
+      "followers": "41K",
+      "signal": "Growing brand",
+      "status": "pending",
+      "notes": ""
+    },
+    {
+      "id": "tt-012",
+      "handle": "@preciouspartypieces",
+      "niche": "Party",
+      "followers": "834",
+      "signal": "New business",
+      "status": "pending",
+      "notes": ""
+    }
+  ]
+}

@@ -1,0 +1,139 @@
+# ============================================================
+# config/brands.yaml — Brand and Competitor Configuration
+# ============================================================
+# Copy this file to brands_local.yaml for customisation.
+# brands_local.yaml is gitignored.
+
+brands:
+
+  crispyglaze:
+    target_brand:
+      canonical_name: "CrspyGlaze"
+      name_variants:
+        - "Crspy Glaze"
+        - "CrspyGlaze"
+        - "CRISPYGLAZE"
+        - "crispyglaze.com"
+      owned_domains:
+        - "crispyglaze.com"
+        - "blog.crispyglaze.com"
+      products:
+        - name: "Chocolate Lava Cake Guide"
+          variants: ["chocolate lava cake", "lava cake recipe"]
+        - name: "Sourdough Starter Guide"
+          variants: ["sourdough starter", "sourdough guide"]
+        - name: "Best Chocolate Chip Cookies"
+          variants: ["chocolate chip cookies", "cookie recipe"]
+
+    category:
+      name: "Recipe & Baking Content"
+      keywords:
+        - "recipe website UK"
+        - "baking recipes"
+        - "home baking tips"
+        - "sourdough starter guide"
+        - "chocolate cake recipe UK"
+
+    target_personas:
+      - "UK home bakers"
+      - "beginner sourdough bakers"
+      - "chocolate dessert lovers"
+      - "people baking at home UK"
+
+    competitors:
+      - canonical: "BBC Good Food"
+        variants: ["BBC Good Food", "bbcgoodfood", "bbc good food"]
+        domains: ["bbcgoodfood.com"]
+        tier: "primary"
+      - canonical: "Allrecipes"
+        variants: ["Allrecipes", "allrecipes.com"]
+        domains: ["allrecipes.com"]
+        tier: "primary"
+      - canonical: "Sallys Baking Addiction"
+        variants: ["Sally's Baking Addiction", "sallysbakingaddiction", "sallys baking"]
+        domains: ["sallysbakingaddiction.com"]
+        tier: "primary"
+      - canonical: "Jamie Oliver"
+        variants: ["Jamie Oliver", "jamieoliver.com"]
+        domains: ["jamieoliver.com"]
+        tier: "secondary"
+
+    prompt_config:
+      min_library_size: 60
+      max_library_size: 120
+      anchor_prompt_count: 20
+      subreddits:
+        - "r/Baking"
+        - "r/Breadit"
+        - "r/EatAndPunch"
+        - "r/recipes"
+        - "r/Cooking"
+      seed_keywords_for_paa:
+        - "best baking recipes UK"
+        - "easy bread recipes at home"
+        - "chocolate cake from scratch UK"
+        - "sourdough starter guide UK"
+        - "home baking tips 2026"
+
+  greenlytidy:
+    target_brand:
+      canonical_name: "GreenLyTidy"
+      name_variants:
+        - "Green Ly Tidy"
+        - "GreenLyTidy"
+        - "GREENLYTIDY"
+        - "greenlytidy.com"
+      owned_domains:
+        - "greenlytidy.com"
+        - "blog.greenlytidy.com"
+      products:
+        - name: "Eco Cleaning Starter Kit"
+          variants: ["eco cleaning", "zero waste cleaning"]
+        - name: "Sustainable Living Guide"
+          variants: ["sustainable living", "eco guide"]
+
+    category:
+      name: "Sustainable Living"
+      keywords:
+        - "eco-friendly products UK"
+        - "zero waste living"
+        - "sustainable home products"
+        - "ethical consumer UK"
+
+    target_personas:
+      - "UK eco-conscious consumers"
+      - "zero waste beginners"
+      - "sustainable home enthusiasts"
+      - "ethical shoppers UK"
+
+    competitors:
+      - canonical: "Ethical Brand Co"
+        variants: ["Ethical Brand Co", "ethical-brand.co"]
+        domains: ["ethical-brand.co"]
+        tier: "primary"
+      - canonical: "Sustainable Living Magazine"
+        vendor: "Sustainable Living Mag"
+        variants: ["Sustainable Living Magazine", "sustainablelivingmag"]
+        domains: ["sustainablelivingmag.com"]
+        tier: "primary"
+      - canonical: "Refitude"
+        variants: ["Refitude", "refitude.co.uk"]
+        domains: ["refitude.co.uk"]
+        tier: "secondary"
+
+    prompt_config:
+      min_library_size: 40
+      max_library_size: 100
+      anchor_prompt_count: 15
+      subreddits:
+        - "r/sustainability"
+        - "r/ZeroWaste"
+        - "r/Frugal"
+        - "r/EthicalLiving"
+        - "r/SimpleLiving"
+      seed_keywords_for_paa:
+        - "eco-friendly products UK"
+        - "how to reduce waste at home"
+        - "sustainable living tips beginners"
+        - "best zero waste products UK"
+        - "ethical consumer UK 2026"
